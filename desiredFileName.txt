@@ -1,0 +1,28 @@
+{
+  "en": [
+    "login",
+    "password",
+    "underReconciliation",
+    "participationRegistration",
+    "idNumberMandatory",
+    "idNumberMustBeDigits",
+    "requestsForInterpretation",
+    "writeHere",
+    "attachments",
+    "chooseFile",
+    "supportedFormats",
+    "yourExplanationRequestHasBeenSentSuccessfully",
+    "detailsOfTheReconciliationMinutes",
+    "minutesOfReconciliation",
+    "theSettlementReportWasRejected",
+    "filter",
+    "filterApply",
+    "claimType",
+    "claimStates",
+    "otpMust4Digits",
+    "waiverOfRight",
+    "waiverOfTheLitigation",
+    "saveAsDraft",
+    "cancelled"
+  ]
+}

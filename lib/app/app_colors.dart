@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+
+class AppColors {
+  static const Color appBackground = Color(0xfffbf9fa);
+  static const Color mainColor = Color(0xffB05538);
+  static const Color textHintColor = Color(0xffa9aaad);
+  static const Color grayLight = Color(0xffEDEDED);
+  static const Color greyStrings = Color(0xffADADA4);
+  static const Color reqStringsColor = Color(0xff4A535A);
+  static const Color grayColor6 = Color(0xffE6E6E6);
+  static const Color white = Color(0xffFFFFFF);
+  static const Color errorColor = Color(0xFFEA3939);
+  static const Color black = Color(0xff000000);
+  static const Color buttonBGGrey = Color(0xffF4F4F4);
+  static const Color buttonLightGreenGradient = Color(0xffB05538);
+  static const Color blackTextColor = Color(0xFF474747);
+  static const Color grayColor7 = Color(0xffE2E2E2);
+  static const Color black0A = Color(0xff0A0A0A);
+  static const Color black0A35 = Color(0x590a0a0a);
+  static const Color focusedOTPBackground = Color(0x1425b472);
+  static const Color defaultOTPBackground = Color(0xfff9f9f9);
+  static const Color itemWidgetBG = Color(0xffE9F4E6);
+  static const Color itemWidgetBorder = Color(0xffCEECD7);
+  static const Color lightBlack = Color(0x854E4E4E);
+  static const Color creamy = Color(0xffE6E6E6);
+  static const Color iconBg = Color(0xffEBF4E9);
+  static const Color iconGreenColor = Color(0xff4FC18C);
+  static const Color lightRed = Color(0x20B05538);
+  static const Color blackQuestion = Color(0xff545454);
+  static const Color lightMaroon = Color(0xffFBD7D7);
+  static const Color profileTextColor = Color(0xff5B5B4A);
+  static const Color TextBlack = Color(0xff222325);
+  static const Color backGroundColor = Color(0xccffffff);
+  static const Color dividerColor = Color(0xFFE4E9F2);
+  static const Color yellowStatus = Color (0xffD8B934);
+  static const Color textTitleLightGrey = Color(0xff61686B);
+  static const Color selectedTextTab = Color(0xff002F56);
+  static const Color unSelectedTextTab = Color(0xff879094);
+  static const Color selectedTabBackground = Color(0xffF4F5F9);
+  static const Color darkBlue = Color(0xff0C3E81);
+  static const Color lightBlue = Color(0xff1964B7);
+  static const Color thirdBlue = Color(0xff1F73CC);
+  static const Color forthBlue = Color(0xff0075BC);
+  static const Color fifthBlue = Color(0xff03598D);
+  static const Color lightColor = Color(0xffE6E7EC);
+  static const Color lightGray = Color(0xffA5AEB1);
+  static const Color pinputColor = Color(0xff0F1324);
+  static const Color darkPinputColor = Color(0xff14151A);
+  static const Color grayPinputColor = Color(0xff898A8C);
+  static const Color appBackGround = Color(0xFFF8F8F8);
+  static const Color appSecondWhite= Color(0xffedeef2);
+  static const Color appThirdWhite= Color(0xfff2f2f2);
+  static const Color appSecondblue= Color(0xff03598D);
+  static const Color appThirdblue= Color(0xff1D4D8B);
+  static const Color appLightRed= Color(0xffBE4949);
+
+  static const Color appsecondWhite= Color(0xffedeef2);
+  static const Color appsecondblue= Color(0xff03598D);
+  static const Color tr= Color(0xffd8b934);
+
+}

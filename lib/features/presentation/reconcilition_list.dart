@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reac/app/di/di.dart';
+import 'package:reac/app/extensions.dart';
+import 'package:reac/app/function.dart';
+import 'package:reac/design/widget/lawsuit_card.dart';
+import 'package:reac/features/domain/models/claim_model/cliam_model.dart';
+import 'package:reac/features/presentation/manager/reconciliation_cubit.dart';
+import 'package:reac/my_app.dart';
+import '../../../app/app_colors.dart';
+import 'auth_screens/widgets.dart';
+import 'claim_details/widgets/resuable_cube.dart';
+import 'manager/get_claim_states.dart';
+import 'minutes_of_settlement.dart';
+class ReconciliationList extends StatefulWidget {
+  const ReconciliationList({super.key});
+
+  static const String id = "ReconcilitionList";
+
+  @override
+  State<ReconciliationList> createState() => _ReconciliationListState();
+}
+
+
+class _ReconciliationListState extends State<ReconciliationList> {
+  final cubit = getIt<ReconcilitionCubit>();
+
+  void loadMore() async {
+    if (cubit.hasNextPage) {
+      cubit.pageIndex++;
+      await cubit.execute(
+      );
+    } else {
+      dPrint("Conditions not met for loading more data");
+    }
+  }
+
+  late final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 10) {
+        loadMore();
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => cubit,
+        child: BlocConsumer<ReconcilitionCubit, ClaimStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is IdleState) {
+              cubit.execute();
+            }
+            final reconcilitionList = cubit.reconciliationList?.results ?? [];
+            return Scaffold(
+              appBar: buildAppBar(context,MyApp.tr.minutesOfTheSettlement),
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                      child: state is LoadingState || state is IdleState
+                          ? const Center(
+                          child: RotatingLoader())
+                          :reconcilitionList.isNotEmpty? ListView.separated(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            controller: _scrollController,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return  LawsuitCard(
+                                onTap: (){
+                                  Navigator.pushNamed(context, MinutesOfSettlement.id,
+                                            arguments: MinutesOfSettlementArguments(
+                                                requestId: reconcilitionList[index].id,
+                                                status: int.parse(reconcilitionList[index].status??"")));
+                                },
+                                isDetailsFromHome: false,
+                                results:Results(
+                                  status: reconcilitionList[index].status,
+                                  requestCode: reconcilitionList[index].requestCode,
+                                  createdOn: reconcilitionList[index].requestDate,
+                                  secondPartyName: reconcilitionList[index].secondPartyName,
+                                  id: reconcilitionList[index].id,
+                                  litigationRequestContractType: reconcilitionList[index].requestTypeName,
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                height: 16,
+                              );
+                            },
+                            itemCount: reconcilitionList.length,
+                          ):Center(child: emptyView(),),
+                    ),
+                  ),
+                  if (state is LoadingMoreState)
+                    const Center(
+                        child:RotatingLoader())
+                ],
+              ),
+            );
+          },
+        ));
+  }
+}
