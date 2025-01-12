@@ -97,14 +97,7 @@ class _ArbitrationAwardsListState extends State<ArbitrationAwardsList> {
                                               typeStep:StepsClaims.arbitrationAwards.text));
                                 },
                                 isDetailsFromHome: false,
-                                results:Results(
-                                  status: interpretationList[index].status,
-                                  requestCode: interpretationList[index].requestCode,
-                                  createdOn: interpretationList[index].requestDate,
-                                  secondPartyName: interpretationList[index].secondPartyName,
-                                  id: interpretationList[index].id,
-                                  litigationRequestContractType: interpretationList[index].requestTypeName,
-                                ),
+                                results:cubit.interpretationList?.results?[index]
                               );
                             },
                             separatorBuilder: (context, index) {

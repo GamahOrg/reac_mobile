@@ -19,10 +19,6 @@
     "filterApply",
     "claimType",
     "claimStates",
-    "otpMust4Digits",
-    "waiverOfRight",
-    "waiverOfTheLitigation",
-    "saveAsDraft",
-    "cancelled"
+    "otpMust4Digits"
   ]
 }

@@ -3,21 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reac/app/app_colors.dart';
 import 'package:reac/app/app_enums.dart';
 import 'package:reac/app/extensions.dart';
-import 'package:reac/app/function.dart';
 import 'package:reac/design/widget/success_dialog.dart';
 import 'package:reac/features/presentation/claim_details/widgets/resuable_cube.dart';
 import 'package:reac/features/presentation/manager/get_claim_states.dart';
 import 'package:reac/features/presentation/widgets/custom_extention_tile.dart';
 import 'package:reac/features/presentation/widgets/custom_row.dart';
-import 'package:reac/features/presentation/widgets/done_container.dart';
 import 'package:reac/my_app.dart';
-
 import '../../app/app_assets.dart';
 import '../../app/custom_bottom_sheet.dart';
 import '../../app/default_button.dart';
 import '../../app/di/di.dart';
 import '../../app/helpers/date_time_helper.dart';
-import '../../app/helpers/flash_toast_helper.dart';
 import 'auth_screens/widgets.dart';
 import 'claim_details/widgets/claim_status_widget.dart';
 import 'explanationBottomSheet.dart';
@@ -40,11 +36,12 @@ class InterpretationOfTheArbitrationAward extends StatefulWidget {
   static const String id = "InterpretationOfTheArbitrationAward";
 
   @override
-  State<InterpretationOfTheArbitrationAward> createState() => _InterpretationOfTheArbitrationAwardState();
+  State<InterpretationOfTheArbitrationAward> createState() =>
+      _InterpretationOfTheArbitrationAwardState();
 }
 
-class _InterpretationOfTheArbitrationAwardState extends State<InterpretationOfTheArbitrationAward> {
-
+class _InterpretationOfTheArbitrationAwardState
+    extends State<InterpretationOfTheArbitrationAward> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -55,15 +52,22 @@ class _InterpretationOfTheArbitrationAwardState extends State<InterpretationOfTh
             litigationRequestId: widget.arguments?.litigationRequestId),
       child: BlocConsumer<InterpretationRulingCubit, ClaimStates>(
         listener: (context, state) {
-          if (state is SuccessAddArbitrationRequest) {
-            SuccessDialog.show(context: context,firstText: MyApp
-                .tr.yourExplanationRequestHasBeenSentSuccessfully);
+          if (state is SuccessAddArbitrationRequest && state.isDone == true) {
+            SuccessDialog.show(
+                context: context,
+                firstText:
+                    MyApp.tr.yourExplanationRequestHasBeenSentSuccessfully);
+          } else if (state is SuccessAddArbitrationRequest &&
+              state.isDone == false) {
+
           }
         },
         builder: (context, state) {
           final cubit = context.watch<InterpretationRulingCubit>();
           return Scaffold(
-            bottomNavigationBar: (widget.arguments?.typeStep==StepsClaims.arbitrationAwards.text&& cubit.explanationDisplayModel?.allowAdd == true)
+            bottomNavigationBar: (widget.arguments?.typeStep ==
+                        StepsClaims.arbitrationAwards.text &&
+                    cubit.explanationDisplayModel?.allowAdd == true)
                 ? Container(
                     color: Colors.white,
                     child: Padding(
@@ -121,7 +125,8 @@ class _InterpretationOfTheArbitrationAwardState extends State<InterpretationOfTh
                           SizedBox(
                             height: 1.h,
                           ),
-                          (widget.arguments?.typeStep == StepsClaims.arbitrationAwards.text)
+                          (widget.arguments?.typeStep ==
+                                  StepsClaims.arbitrationAwards.text)
                               ? CustomExpansionTile(
                                   isLoading: true,
                                   isPaddingTitle: true,
@@ -199,7 +204,13 @@ class _InterpretationOfTheArbitrationAwardState extends State<InterpretationOfTh
                                       ),
                                     ])
                               : const SizedBox(),
-                          (widget.arguments?.typeStep == StepsClaims.requestsForInterpretationOfRulings.text && widget.arguments?.status == LitigationStatus.WaitingForExplanation.value)
+                          (widget.arguments?.typeStep ==
+                                      StepsClaims
+                                          .requestsForInterpretationOfRulings
+                                          .text &&
+                                  widget.arguments?.status ==
+                                      LitigationStatus
+                                          .WaitingForExplanation.value)
                               ? CustomExpansionTile(
                                   isLoading: true,
                                   isPaddingTitle: true,
@@ -252,72 +263,11 @@ class _InterpretationOfTheArbitrationAwardState extends State<InterpretationOfTh
                                   ],
                                 )
                               : const SizedBox(),
-                          (widget.arguments?.typeStep ==
-                                      StepsClaims
-                                          .requestsForInterpretationOfRulings
-                                          .text &&
-                                  widget.arguments?.status ==
-                                      LitigationStatus
-                                          .ExplanationResponsed.value)
-                              ? CustomExpansionTile(
-                                  isLoading: true,
-                                  expandedIcon: AppAssets.icArrowDown,
-                                  collapsedIcon: AppAssets.icArrowUp,
-                                  isPaddingTitle: true,
-                                  initiallyExpanded: true,
-                                  title: MyApp.tr
-                                      .requestForInterpretationOfTheArbitration,
-                                  leading: Image(
-                                    image: AssetImage(AppAssets.icClaimsInfo),
-                                  ),
-                                  children: [
-                                      CustomRow(
-                                        dm: CustomRowDM(
-                                            startIcon: AppAssets.icHashtag,
-                                            label: MyApp
-                                                .tr.requestsForInterpretation,
-                                            value: cubit
-                                                    .explanationDisplayModel
-                                                    ?.report
-                                                    ?.explanationRequests ??
-                                                ""),
-                                      ),
-                                      CustomRow(
-                                        dm: CustomRowDM(
-                                            startIcon: AppAssets.icHashtag,
-                                            label: MyApp.tr.requestDate,
-                                            value: DateTimeHelper
-                                                .formatExplanationRequestDate(cubit
-                                                        .explanationDisplayModel
-                                                        ?.report
-                                                        ?.explanationRequestDate ??
-                                                    "")),
-                                      ),
-                                      CustomRow(
-                                        dm: CustomRowDM(
-                                            startIcon: AppAssets.icHashtag,
-                                            label: MyApp.tr.response,
-                                            value: cubit.explanationDisplayModel
-                                                    ?.report?.response ??
-                                                ""),
-                                      ),
-                                      CustomRow(
-                                        dm: CustomRowDM(
-                                            startIcon: AppAssets.icHashtag,
-                                            label: MyApp.tr.replyDate,
-                                            value: DateTimeHelper
-                                                .formatExplanationRequestDate(cubit
-                                                        .explanationDisplayModel
-                                                        ?.report
-                                                        ?.responseOn ??
-                                                    "")),
-                                      ),
-                                    ])
-                              : SizedBox(),
                           SizedBox(
                             height: 3.h,
                           ),
-                          widget.arguments?.typeStep == StepsClaims.arbitrationAwards.text
+                          widget.arguments?.typeStep ==
+                                  StepsClaims.arbitrationAwards.text
                               ? Column(
                                   children: [
                                     CustomExpansionTile(
@@ -579,7 +529,7 @@ class _InterpretationOfTheArbitrationAwardState extends State<InterpretationOfTh
                                         ]),
                                   ],
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           widget.arguments?.typeStep ==
                                   StepsClaims
                                       .requestsForInterpretationOfRulings.text

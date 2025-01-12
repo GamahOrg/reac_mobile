@@ -97,14 +97,7 @@ class _InterpretationListScreenState extends State<InterpretationListScreen> {
                                   typeStep: StepsClaims.requestsForInterpretationOfRulings.text));
                                 },
                                 isDetailsFromHome: false,
-                                results:Results(
-                                  status: interpretationList[index].status,
-                                  requestCode: interpretationList[index].requestCode,
-                                  createdOn: interpretationList[index].requestDate,
-                                  secondPartyName: interpretationList[index].secondPartyName,
-                                  id: interpretationList[index].id,
-                                  litigationRequestContractType: interpretationList[index].requestTypeName,
-                                ),
+                                results:cubit.interpretationList?.results?[index]
                               );
                             },
                             separatorBuilder: (context, index) {

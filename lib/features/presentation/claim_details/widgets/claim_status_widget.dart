@@ -22,9 +22,9 @@ class ClaimStatusWidget extends StatelessWidget {
         status.value == LitigationStatus.ExplanationResponsed.value ||
         status.value == LitigationStatus.WaitingForExplanation.value ||
         status.value == LitigationStatus.SentBackForEdit.value ||
+        status.value==LitigationStatus.Edited.value||
         status.value == LitigationStatus.AgreementRequestHasBeenSent.value ||
-        status.value ==
-            LitigationStatus.TheMinutesOfTheMeetingWereWritten.value ||
+        status.value == LitigationStatus.TheMinutesOfTheMeetingWereWritten.value ||
         status.value == LitigationStatus.JudgmentDecisionIssued.value ||
         status.value == LitigationStatus.SaveAsDraft.value ||
         status.value == LitigationStatus.ReconciliationWasNotMade.value ||

@@ -27,6 +27,7 @@ class LitigationStatusHelper {
       case 18:
         return const Color(0xffE5F4D4);
       case 13:
+      case 14:
         return const Color(0xff4DC1BB).withOpacity(0.1);
       default:
         return const Color(0xffffffff);
@@ -56,6 +57,7 @@ class LitigationStatusHelper {
       case 8:
         return const Color(0xff002F56);
       case 13:
+      case 14:
         return const Color(0xff4DC1BB);
       default:
         return const Color(0xffffffff);

@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 import 'package:reac/app/constants.dart';
 import 'package:reac/app/core/data/response/base_response.dart';
 import 'package:reac/app/di/module/dio_module.dart';
+import 'package:reac/features/data/request/verify_request.dart';
+import 'package:reac/features/domain/models/auth/auth_response.dart';
 
 import '../../../app/app_prefs.dart';
 import '../../../app/core/data/network/error_handler.dart';
@@ -40,7 +42,6 @@ class AuthRepositoryImpl implements AuthRepository {
         appPreferences.putData(
             Constants.appPreferencesToken, r.data?.accessToken);
         getIt<Dio>().updateHeader();
-
       });
       return value;
     });
@@ -59,5 +60,11 @@ class AuthRepositoryImpl implements AuthRepository {
     // return safeApi.call(apiCall: _remoteDataSource.resetPassword(identityNumber));
 
     return await Right(BaseDM(data: "SuccessResetPassword"));
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse<TransactionResponse>>> verifyUser(
+      VerifyRequest request) {
+    return safeApi.call(apiCall: _remoteDataSource.verifyUser(request));
   }
 }

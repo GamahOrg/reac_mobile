@@ -46,12 +46,12 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:buildAppBar(context,MyApp.tr.setting),
       body: Column(
         children: [
-          _buildHeader(context),
           ListView(
             shrinkWrap: true,
-            padding: EdgeInsets.symmetric(vertical: 5.h),
+            padding: EdgeInsets.symmetric(vertical: 3.h),
             children: [
               _buildSettingItem(
                 onTap: _showChangePasswordBottomSheet,
@@ -73,48 +73,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 title:AppCubit.get(context).isArSelected? MyApp.tr.changeToEnglish:MyApp.tr.changeToArabic,
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container _buildHeader(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(bottom: 3.h, left: 5.5.w, right: 5.5.w),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color(0XFF002F56),
-            Color(0xff03598D),
-          ],
-        ),
-      ),
-      height: 12.5.h,
-      width: double.infinity,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: LanguageDirection(
-              child: SvgPicture.asset(
-                AppAssets.icBack,
-                fit: BoxFit.cover,
-                height: 6.h,
-              ),
-            ),
-          ),
-          SizedBox(width: MediaQuery.sizeOf(context).width * 0.23),
-          Text(
-            MyApp.tr.setting,
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 16.0.sp,
-              color: const Color(0xffFFFFFF),
-            ),
           ),
         ],
       ),

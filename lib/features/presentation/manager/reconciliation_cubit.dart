@@ -39,7 +39,11 @@ class ReconcilitionCubit extends Cubit<ClaimStates> {
     response.fold((error) {
       emit(ErrorState(error.toString(), message: error.message.toString()));
     }, (data) {
-      reconciliationList = data.data;
+      if (pageIndex ==1) {
+        reconciliationList = data.data;
+      } else {
+        reconciliationList?.results = [...reconciliationList?.results ?? [], ...data.data?.results ?? []];
+      }
       if ((data.data?.results?.length ?? 0) < pageSize) {
         hasNextPage = false;
       } else {

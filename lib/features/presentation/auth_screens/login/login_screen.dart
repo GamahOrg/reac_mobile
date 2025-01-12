@@ -9,6 +9,7 @@ import 'package:reac/app/extensions.dart';
 import 'package:reac/features/presentation/auth_screens/login/login_cubit.dart';
 import 'package:reac/features/presentation/auth_screens/login/login_state.dart';
 import 'package:reac/features/presentation/auth_screens/reset_password/reset_password.dart';
+import 'package:reac/features/presentation/auth_screens/verify/verify_login_screen.dart';
 import 'package:reac/features/presentation/home/claims_screen.dart';
 import 'package:reac/features/presentation/widgets/custom_drop_down_button_text_field.dart';
 import 'package:reac/my_app.dart';
@@ -46,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
           if (state is SuccessState) {
             if (identityTypeSelect == IdentityType.citizen) {
-              Navigator.pushNamed(context, ClaimsScreen.id);
+              Navigator.pushNamed(context, VerifyLoginScreen.id,arguments: VerifyArgument(transactionID: myCubit.transactionResponse.data?.transId??"",code: myCubit.transactionResponse.data?.random??""));
             } else {
               Navigator.pushNamed(context, ClaimsScreen.id, arguments: "login");
             }

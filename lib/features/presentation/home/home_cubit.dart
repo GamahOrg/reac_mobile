@@ -36,19 +36,26 @@ class HomeCubit extends Cubit<ClaimStates> {
     getClaimUseCase.searchKey = searchKey ?? "";
     getClaimUseCase.types = getSelectedTypeClaim() ?? [];
     getClaimUseCase.statuses = getSelectedStatus() ?? [];
+
     var response = await getClaimUseCase.execute();
     response.fold((error) {
       emit(ErrorState(error.toString(), message: error.message.toString()));
     }, (data) {
-      claimResponse = data.data;
+      if (pageIndex ==1) {
+        claimResponse = data.data;
+      } else {
+        claimResponse?.results = [...claimResponse?.results ?? [], ...data.data?.results ?? []];
+      }
       if ((data.data?.results?.length ?? 0) < pageSize) {
         hasNextPage = false;
       } else {
         hasNextPage = true;
       }
+
       emit(SuccessState(data, message: 'Data loaded successfully!'));
     });
   }
+
 
   void _buildLitigationTypes() {
     litigationTypes = [];

@@ -60,7 +60,7 @@ class LawsuitCard extends StatelessWidget {
                   child: Center(child: SvgPicture.asset(AppAssets.icNote)),
                 ),
                 Text(
-                  results?.litigationRequestContractType ?? "",
+                 results?.litigationRequestContractType ?? results?.requestTypeName??"",
                   style: TextStyle(
                       color: const Color(0xff3F3E43),
                       fontWeight: FontWeight.w400,
@@ -134,7 +134,7 @@ class LawsuitCard extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 5, top: 5, left: 5),
                   child: Text(
                     DateTimeHelper.formatStringToNewFormat(
-                        results?.createdOn ?? ""),
+                        results?.createdOn ?? results?.requestDate??""),
                     style: TextStyle(
                         color: AppColors.textTitleLightGrey,
                         fontSize: 9.sp,

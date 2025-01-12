@@ -50,7 +50,7 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
   void loadMore() async {
     if (cubit.hasNextPage) {
       cubit.pageIndex++;
-      await cubit.execute(
+    await cubit.execute(
         searchKey: searchController.text,
       );
     } else {
@@ -440,14 +440,11 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
                                 claimType(),
                                 SizedBox(height: 1.h),
                                 claimState(),
-                                // Remove or adjust unnecessary spacing
-                                // SizedBox(height: 10.h), // This line was causing extra space
                               ],
                             ),
                           ),
                         ),
                       ),
-                      // Fixed action buttons at the bottom
                       Padding(
                         padding: EdgeInsets.all(6.w),
                         child: actionFilter(cubit),
@@ -512,6 +509,7 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
               fontWeight: FontWeight.w700,
               textColor: Colors.white,
               onTap: () {
+                cubit.pageIndex = 1;
                 Navigator.pop(context, cubit.execute());
               },
             ),

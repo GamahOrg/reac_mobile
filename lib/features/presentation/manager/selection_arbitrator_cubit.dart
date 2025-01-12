@@ -17,12 +17,11 @@ class AppointmentMembersArbitrationPanelCubit extends Cubit<ClaimStates> {
   DetailsResponseModel? arbitratorsModelGet;
   ClaimResponse? arbitratorsNominationList;
   DetailsResponseModel? arbitratorsModelPost;
- // List<int> priority=[1,2,3,4,5,6,7];
   var numberedList=[];
   void createNumberedList() {
     numberedList = List.generate(arbitratorsModelGet!.citizenArbitratorShortStatusDtos!.length, (index) {
-      int number = index + 1; // Assign to a variable
-      return number; // Return the variable
+      int number = index + 1;
+      return number;
     });
   }
   int pageIndex = 1;
@@ -42,7 +41,11 @@ class AppointmentMembersArbitrationPanelCubit extends Cubit<ClaimStates> {
     response.fold((error) {
       emit(ErrorState(error.toString(), message: error.message.toString()));
     }, (data) {
-      arbitratorsNominationList = data.data;
+      if (pageIndex ==1) {
+        arbitratorsNominationList = data.data;
+      } else {
+        arbitratorsNominationList?.results = [...arbitratorsNominationList?.results ?? [], ...data.data?.results ?? []];
+      }
       if ((data.data?.results?.length ?? 0) < pageSize) {
         hasNextPage = false;
       } else {
@@ -73,6 +76,4 @@ class AppointmentMembersArbitrationPanelCubit extends Cubit<ClaimStates> {
       emit(SuccessState(data, message: 'Data loaded successfully!'));
     });
   }
-
-
 }

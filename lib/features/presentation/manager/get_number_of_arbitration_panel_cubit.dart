@@ -79,7 +79,11 @@ class NumberOfArbitrationPanelCubit extends Cubit<ClaimStates> {
     response.fold((error) {
       emit(ErrorState(error.toString(), message: error.message.toString()));
     }, (data) {
-      arbitratorsCountReplyModel = data.data;
+      if (pageIndex ==1) {
+        arbitratorsCountReplyModel = data.data;
+      } else {
+        arbitratorsCountReplyModel?.results = [...arbitratorsCountReplyModel?.results ?? [], ...data.data?.results ?? []];
+      }
       if ((data.data?.results?.length ?? 0) < pageSize) {
         hasNextPage = false;
       } else {

@@ -29,13 +29,6 @@ class InterpretationRulingCubit extends Cubit<ClaimStates> {
     return fileName.split('.').last;
   }
 
-  Future<void> openFile(String filePath) async {
-    final result = await OpenFile.open(filePath);
-    if (result.type != ResultType.done) {
-      print('Error opening file: ${result.message}');
-    }
-  }
-
   Future<void> pickFiles() async {
     result = await FilePicker.platform.pickFiles(
       allowMultiple: false, // Only pick one file
@@ -131,7 +124,11 @@ class InterpretationRulingCubit extends Cubit<ClaimStates> {
     response.fold((error) {
       emit(ErrorState(error.toString(), message: error.message.toString()));
     }, (data) {
-      interpretationList = data.data;
+      if (pageIndex ==1) {
+        interpretationList = data.data;
+      } else {
+        interpretationList?.results = [...interpretationList?.results ?? [], ...data.data?.results ?? []];
+      }
       if ((data.data?.results?.length ?? 0) < pageSize) {
         hasNextPage = false;
       } else {

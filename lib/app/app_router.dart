@@ -9,7 +9,7 @@ import '../features/presentation/agreement_list_screen.dart';
 import '../features/presentation/appointment_members_arbitration_panel_list.dart';
 import '../features/presentation/arbitration_awards_list.dart';
 import '../features/presentation/auth_screens/login/login_screen.dart';
-import '../features/presentation/auth_screens/verify_login_screen.dart';
+import '../features/presentation/auth_screens/verify/verify_login_screen.dart';
 import '../features/presentation/claim_details/claim_details.dart';
 import '../features/presentation/interpretation_list.dart';
 import '../features/presentation/interpretation_of_ the _arbitration _award.dart';
@@ -77,8 +77,7 @@ class AppRouter {
       case ClaimsScreen.id:
         return MaterialPageRoute(builder: (_) => const ClaimsScreen());
       case VerifyLoginScreen.id:
-        return MaterialPageRoute(builder: (_) => const VerifyLoginScreen());
-
+        return MaterialPageRoute(builder: (_) => VerifyLoginScreen(arg: settings.arguments as VerifyArgument,));
       case VerifyLoginGulfScreen.id:
         final String isLogin = settings.arguments.toString();
         return MaterialPageRoute(

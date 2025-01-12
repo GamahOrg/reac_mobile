@@ -233,36 +233,37 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
   Widget _buildSelectedFilesSection() {
     final cubit = widget.interpretationRulingCubit!;
 
-    // Return an empty SizedBox if the result is null
     if (cubit.result == null || cubit.result!.files.isEmpty) {
       return const SizedBox();
     }
 
-    // Get file extension
     String? extension = cubit.getFileExtension(cubit.result!.files.first.name);
+    String? filePath = cubit.result!.files.first.path; // Get the file path
 
-    // Map file extensions to corresponding assets
+    bool isImage(String? extension) {
+      return extension == 'png' || extension == 'jpg' || extension == 'jpeg';
+    }
+
     String getFileAsset(String? extension) {
       switch (extension?.toLowerCase()) {
         case "docx":
           return AppAssets.bgDocx;
         case "pdf":
           return AppAssets.bgPdf;
-        case "png":
-          return AppAssets.bgPng;
         case "xls":
           return AppAssets.bgXls;
         default:
-          return AppAssets.bgJpg;
+          return AppAssets.bgPng;
       }
     }
+    print('File picked: $filePath, Extension: $extension');
 
     return StatefulBuilder(
       builder: (context, setState) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Container(
-            width: double.infinity,
+            width: double.infinity*0.5,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
@@ -272,15 +273,26 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(
-                  width: 17.w,
-                  height: 10.h,
-                  fit: BoxFit.contain,
-                  image: AssetImage(getFileAsset(extension)),
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(Icons.error);  // Fallback if the image doesn't load
-                  },
-                ),
+                if (filePath != null && isImage(extension))
+                  Image.file(
+                    File(filePath),
+                    width: 17.w,
+                    height: 10.h,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.error);  // Fallback if the image doesn't load
+                    },
+                  )
+                else
+                  Image(
+                    width: 17.w,
+                    height: 10.h,
+                    fit: BoxFit.contain,
+                    image: AssetImage(getFileAsset(extension)),
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.error);
+                    },
+                  ),
               ],
             ),
           ),
@@ -288,6 +300,9 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
       },
     );
   }
+
+
+
 
 
   Widget _buildActionButtons(
