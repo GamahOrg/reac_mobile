@@ -18,5 +18,6 @@ flutter doctor
 echo "Installed flutter to `pwd`/flutter"
 
 flutter pub get
-
+flutter pub upgrade
+dart run build_runner build
 exit 0
