@@ -66,7 +66,7 @@ class _AuthServiceClient implements AuthServiceClient {
     )
             .compose(
               _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Account/VerifyUser',
+              'http://192.168.194.171:222/api/Account/Login',
               queryParameters: queryParameters,
               data: _data,
             )
