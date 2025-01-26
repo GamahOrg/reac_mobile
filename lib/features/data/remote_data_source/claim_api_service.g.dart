@@ -12,11 +12,14 @@ class _ClaimServiceClient implements ClaimServiceClient {
   _ClaimServiceClient(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
+
+  final ParseErrorLogger? errorLogger;
 
   @override
   Future<BaseResponse<ClaimResponse>> getClaimsApi(
@@ -37,27 +40,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<ClaimResponse>>(Options(
+    final _options = _setStreamType<BaseResponse<ClaimResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/LitigationRequest/List',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<ClaimResponse>.fromJson(
-      _result.data!,
-      (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/LitigationRequest/List',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<ClaimResponse> _value;
+    try {
+      _value = BaseResponse<ClaimResponse>.fromJson(
+        _result.data!,
+        (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -69,27 +78,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<ClaimDetailsModel>>(Options(
+    final _options = _setStreamType<BaseResponse<ClaimDetailsModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/LitigationRequest/GetLitigationById',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<ClaimDetailsModel>.fromJson(
-      _result.data!,
-      (json) => ClaimDetailsModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/LitigationRequest/GetLitigationById',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<ClaimDetailsModel> _value;
+    try {
+      _value = BaseResponse<ClaimDetailsModel>.fromJson(
+        _result.data!,
+        (json) => ClaimDetailsModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -101,7 +116,7 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
+    final _options =
         _setStreamType<BaseResponse<List<ClaimEventModel>>>(Options(
       method: 'GET',
       headers: _headers,
@@ -109,7 +124,7 @@ class _ClaimServiceClient implements ClaimServiceClient {
     )
             .compose(
               _dio.options,
-              'http://192.168.194.171:5000/api/mobile/LitigationRequest/GetLitigationRequestEvents',
+              'https://staging-reac-api.rega.gov.sa/api/mobile/LitigationRequest/GetLitigationRequestEvents',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -117,16 +132,23 @@ class _ClaimServiceClient implements ClaimServiceClient {
                 baseUrl: _combineBaseUrls(
               _dio.options.baseUrl,
               baseUrl,
-            ))));
-    final _value = BaseResponse<List<ClaimEventModel>>.fromJson(
-      _result.data!,
-      (json) => json is List<dynamic>
-          ? json
-              .map<ClaimEventModel>(
-                  (i) => ClaimEventModel.fromJson(i as Map<String, dynamic>))
-              .toList()
-          : List.empty(),
-    );
+            )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<List<ClaimEventModel>> _value;
+    try {
+      _value = BaseResponse<List<ClaimEventModel>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<ClaimEventModel>(
+                    (i) => ClaimEventModel.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -138,27 +160,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<AgreementModel>>(Options(
+    final _options = _setStreamType<BaseResponse<AgreementModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/LitigationRequest/GetCitizenLitigationRequestForAgreementRequestReplyByRequestId',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<AgreementModel>.fromJson(
-      _result.data!,
-      (json) => AgreementModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/LitigationRequest/GetCitizenLitigationRequestForAgreementRequestReplyByRequestId',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<AgreementModel> _value;
+    try {
+      _value = BaseResponse<AgreementModel>.fromJson(
+        _result.data!,
+        (json) => AgreementModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -170,27 +198,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(agreementAction.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<AgreementModel>>(Options(
+    final _options = _setStreamType<BaseResponse<AgreementModel>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/LitigationRequest/AddCitizenLitigationRequestForAgreementRequestReply',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<AgreementModel>.fromJson(
-      _result.data!,
-      (json) => AgreementModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/LitigationRequest/AddCitizenLitigationRequestForAgreementRequestReply',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<AgreementModel> _value;
+    try {
+      _value = BaseResponse<AgreementModel>.fromJson(
+        _result.data!,
+        (json) => AgreementModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -202,27 +236,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<Reconciliation>>(Options(
+    final _options = _setStreamType<BaseResponse<Reconciliation>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/Reconciliation/GetCitizenLitigationRequestForReportReplyByRequestId',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<Reconciliation>.fromJson(
-      _result.data!,
-      (json) => Reconciliation.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/Reconciliation/GetCitizenLitigationRequestForReportReplyByRequestId',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<Reconciliation> _value;
+    try {
+      _value = BaseResponse<Reconciliation>.fromJson(
+        _result.data!,
+        (json) => Reconciliation.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -239,27 +279,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<Reconciliation>>(Options(
+    final _options = _setStreamType<BaseResponse<Reconciliation>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/Reconciliation/AddCitizenLitigationRequestForReportReply',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<Reconciliation>.fromJson(
-      _result.data!,
-      (json) => Reconciliation.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/Reconciliation/AddCitizenLitigationRequestForReportReply',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<Reconciliation> _value;
+    try {
+      _value = BaseResponse<Reconciliation>.fromJson(
+        _result.data!,
+        (json) => Reconciliation.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -273,27 +319,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
+    final _options = _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/GetLitigationRequestForReportByRequestId',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<DetailsResponseModel>.fromJson(
-      _result.data!,
-      (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/GetLitigationRequestForReportByRequestId',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<DetailsResponseModel> _value;
+    try {
+      _value = BaseResponse<DetailsResponseModel>.fromJson(
+        _result.data!,
+        (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -310,7 +362,7 @@ class _ClaimServiceClient implements ClaimServiceClient {
           i.path,
           filename: i.path.split(Platform.pathSeparator).last,
         ))));
-    final _result = await _dio.fetch<Map<String, dynamic>>(
+    final _options =
         _setStreamType<BaseResponse<List<UploadFileResponse>>>(Options(
       method: 'POST',
       headers: _headers,
@@ -319,7 +371,7 @@ class _ClaimServiceClient implements ClaimServiceClient {
     )
             .compose(
               _dio.options,
-              'http://192.168.194.171:5000/api/mobile/SysFileManager/Upload',
+              'https://staging-reac-api.rega.gov.sa/api/mobile/SysFileManager/Upload',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -327,16 +379,23 @@ class _ClaimServiceClient implements ClaimServiceClient {
                 baseUrl: _combineBaseUrls(
               _dio.options.baseUrl,
               baseUrl,
-            ))));
-    final _value = BaseResponse<List<UploadFileResponse>>.fromJson(
-      _result.data!,
-      (json) => json is List<dynamic>
-          ? json
-              .map<UploadFileResponse>(
-                  (i) => UploadFileResponse.fromJson(i as Map<String, dynamic>))
-              .toList()
-          : List.empty(),
-    );
+            )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<List<UploadFileResponse>> _value;
+    try {
+      _value = BaseResponse<List<UploadFileResponse>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<UploadFileResponse>((i) =>
+                    UploadFileResponse.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -347,27 +406,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = arbitrationRequestModel;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<dynamic>>(Options(
+    final _options = _setStreamType<BaseResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/AddArbitrationReportExplanationRequest',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<dynamic>.fromJson(
-      _result.data!,
-      (json) => json as dynamic,
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/AddArbitrationReportExplanationRequest',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<dynamic> _value;
+    try {
+      _value = BaseResponse<dynamic>.fromJson(
+        _result.data!,
+        (json) => json as dynamic,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -382,27 +447,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
+    final _options = _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/GetLitigationRequestForReportExplanationRequestByRequestId',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<DetailsResponseModel>.fromJson(
-      _result.data!,
-      (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/GetLitigationRequestForReportExplanationRequestByRequestId',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<DetailsResponseModel> _value;
+    try {
+      _value = BaseResponse<DetailsResponseModel>.fromJson(
+        _result.data!,
+        (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -419,27 +490,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<ClaimResponse>>(Options(
+    final _options = _setStreamType<BaseResponse<ClaimResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsCountReply',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<ClaimResponse>.fromJson(
-      _result.data!,
-      (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsCountReply',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<ClaimResponse> _value;
+    try {
+      _value = BaseResponse<ClaimResponse>.fromJson(
+        _result.data!,
+        (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -451,27 +528,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
+    final _options = _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/GetLitigationRequestForAddArbitratorsCountByRequestId',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<DetailsResponseModel>.fromJson(
-      _result.data!,
-      (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/GetLitigationRequestForAddArbitratorsCountByRequestId',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<DetailsResponseModel> _value;
+    try {
+      _value = BaseResponse<DetailsResponseModel>.fromJson(
+        _result.data!,
+        (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -482,7 +565,7 @@ class _ClaimServiceClient implements ClaimServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
+    final _options =
         _setStreamType<BaseResponse<List<NumberOfArbitrationsModel>>>(Options(
       method: 'GET',
       headers: _headers,
@@ -490,7 +573,7 @@ class _ClaimServiceClient implements ClaimServiceClient {
     )
             .compose(
               _dio.options,
-              'http://192.168.194.171:5000/api/mobile/SysArbitratorCount/Get',
+              'https://staging-reac-api.rega.gov.sa/api/mobile/SysArbitratorCount/Get',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -498,16 +581,24 @@ class _ClaimServiceClient implements ClaimServiceClient {
                 baseUrl: _combineBaseUrls(
               _dio.options.baseUrl,
               baseUrl,
-            ))));
-    final _value = BaseResponse<List<NumberOfArbitrationsModel>>.fromJson(
-      _result.data!,
-      (json) => json is List<dynamic>
-          ? json
-              .map<NumberOfArbitrationsModel>((i) =>
-                  NumberOfArbitrationsModel.fromJson(i as Map<String, dynamic>))
-              .toList()
-          : List.empty(),
-    );
+            )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<List<NumberOfArbitrationsModel>> _value;
+    try {
+      _value = BaseResponse<List<NumberOfArbitrationsModel>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<NumberOfArbitrationsModel>((i) =>
+                    NumberOfArbitrationsModel.fromJson(
+                        i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -519,27 +610,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = numberOfArbitractionsRequestModel;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
+    final _options = _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/AddArbitratorsCount',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<DetailsResponseModel>.fromJson(
-      _result.data!,
-      (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/AddArbitratorsCount',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<DetailsResponseModel> _value;
+    try {
+      _value = BaseResponse<DetailsResponseModel>.fromJson(
+        _result.data!,
+        (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -556,27 +653,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<ClaimResponse>>(Options(
+    final _options = _setStreamType<BaseResponse<ClaimResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsNominationListReply',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<ClaimResponse>.fromJson(
-      _result.data!,
-      (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsNominationListReply',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<ClaimResponse> _value;
+    try {
+      _value = BaseResponse<ClaimResponse>.fromJson(
+        _result.data!,
+        (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -590,27 +693,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
+    final _options = _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsNominationListReplyByRequestId',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<DetailsResponseModel>.fromJson(
-      _result.data!,
-      (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsNominationListReplyByRequestId',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<DetailsResponseModel> _value;
+    try {
+      _value = BaseResponse<DetailsResponseModel>.fromJson(
+        _result.data!,
+        (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -621,27 +730,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = selectionarbitratorRequest;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
+    final _options = _setStreamType<BaseResponse<DetailsResponseModel>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/AddCitizenLitigationRequestForReportArbitratorsNominationListReply',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<DetailsResponseModel>.fromJson(
-      _result.data!,
-      (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/AddCitizenLitigationRequestForReportArbitratorsNominationListReply',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<DetailsResponseModel> _value;
+    try {
+      _value = BaseResponse<DetailsResponseModel>.fromJson(
+        _result.data!,
+        (json) => DetailsResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -658,27 +773,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<ClaimResponse>>(Options(
+    final _options = _setStreamType<BaseResponse<ClaimResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/Reconciliation/GetCitizenLitigationRequestForReportReply',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<ClaimResponse>.fromJson(
-      _result.data!,
-      (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/Reconciliation/GetCitizenLitigationRequestForReportReply',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<ClaimResponse> _value;
+    try {
+      _value = BaseResponse<ClaimResponse>.fromJson(
+        _result.data!,
+        (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -695,27 +816,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<ClaimResponse>>(Options(
+    final _options = _setStreamType<BaseResponse<ClaimResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/Arbitration/GetLitigationRequestForReportExplanationRequest',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<ClaimResponse>.fromJson(
-      _result.data!,
-      (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/Arbitration/GetLitigationRequestForReportExplanationRequest',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<ClaimResponse> _value;
+    try {
+      _value = BaseResponse<ClaimResponse>.fromJson(
+        _result.data!,
+        (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -732,27 +859,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<ClaimResponse>>(Options(
+    final _options = _setStreamType<BaseResponse<ClaimResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:5000/api/mobile/LitigationRequest/GetCitizenLitigationRequestForAgreementRequestReply',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<ClaimResponse>.fromJson(
-      _result.data!,
-      (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa/api/mobile/LitigationRequest/GetCitizenLitigationRequestForAgreementRequestReply',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<ClaimResponse> _value;
+    try {
+      _value = BaseResponse<ClaimResponse>.fromJson(
+        _result.data!,
+        (json) => ClaimResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -762,27 +895,33 @@ class _ClaimServiceClient implements ClaimServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse<NotificationModel>>(Options(
+    final _options = _setStreamType<BaseResponse<NotificationModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'http://192.168.194.171:3333/api/Notification/GetNotificationListForPortal',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = BaseResponse<NotificationModel>.fromJson(
-      _result.data!,
-      (json) => NotificationModel.fromJson(json as Map<String, dynamic>),
-    );
+        .compose(
+          _dio.options,
+          'https://staging-reac-api.rega.gov.sa:3333/api/Notification/GetNotificationListForPortal',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<NotificationModel> _value;
+    try {
+      _value = BaseResponse<NotificationModel>.fromJson(
+        _result.data!,
+        (json) => NotificationModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 

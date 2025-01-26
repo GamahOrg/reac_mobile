@@ -26,8 +26,12 @@ mixin _$SelectionArbitratorRequest {
       get arbitratorNominationListRequestItems =>
           throw _privateConstructorUsedError;
 
+  /// Serializes this SelectionArbitratorRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SelectionArbitratorRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SelectionArbitratorRequestCopyWith<SelectionArbitratorRequest>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -56,6 +60,8 @@ class _$SelectionArbitratorRequestCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SelectionArbitratorRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,6 +107,8 @@ class __$$SelectionArbitratorRequestImplCopyWithImpl<$Res>
       $Res Function(_$SelectionArbitratorRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SelectionArbitratorRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -167,7 +175,7 @@ class _$SelectionArbitratorRequestImpl implements _SelectionArbitratorRequest {
                 _arbitratorNominationListRequestItems));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -175,7 +183,9 @@ class _$SelectionArbitratorRequestImpl implements _SelectionArbitratorRequest {
       const DeepCollectionEquality()
           .hash(_arbitratorNominationListRequestItems));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SelectionArbitratorRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SelectionArbitratorRequestImplCopyWith<_$SelectionArbitratorRequestImpl>
@@ -206,8 +216,11 @@ abstract class _SelectionArbitratorRequest
   @override
   List<ArbitratorNominationListRequestItems>?
       get arbitratorNominationListRequestItems;
+
+  /// Create a copy of SelectionArbitratorRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SelectionArbitratorRequestImplCopyWith<_$SelectionArbitratorRequestImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -222,8 +235,12 @@ mixin _$ArbitratorNominationListRequestItems {
   String? get arbitratorListId => throw _privateConstructorUsedError;
   int? get priority => throw _privateConstructorUsedError;
 
+  /// Serializes this ArbitratorNominationListRequestItems to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ArbitratorNominationListRequestItems
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ArbitratorNominationListRequestItemsCopyWith<
           ArbitratorNominationListRequestItems>
       get copyWith => throw _privateConstructorUsedError;
@@ -251,6 +268,8 @@ class _$ArbitratorNominationListRequestItemsCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ArbitratorNominationListRequestItems
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -292,6 +311,8 @@ class __$$ArbitratorNominationListRequestItemsImplCopyWithImpl<$Res>
       $Res Function(_$ArbitratorNominationListRequestItemsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ArbitratorNominationListRequestItems
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -343,11 +364,13 @@ class _$ArbitratorNominationListRequestItemsImpl
                 other.priority == priority));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, arbitratorListId, priority);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ArbitratorNominationListRequestItems
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ArbitratorNominationListRequestItemsImplCopyWith<
@@ -377,8 +400,11 @@ abstract class _ArbitratorNominationListRequestItems
   String? get arbitratorListId;
   @override
   int? get priority;
+
+  /// Create a copy of ArbitratorNominationListRequestItems
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ArbitratorNominationListRequestItemsImplCopyWith<
           _$ArbitratorNominationListRequestItemsImpl>
       get copyWith => throw _privateConstructorUsedError;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:reac/app/api_urls.dart';
 import 'package:reac/app/app_colors.dart';
 import 'package:reac/app/extensions.dart';
 import 'package:reac/app_cubit.dart';
@@ -37,8 +38,8 @@ class _VerifyLoginScreenState extends State<VerifyLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("arg${widget.arg?.transactionID??""}");
-    _signalRService = SignalRService(widget.arg?.transactionID??"");
+    print("arg${widget.arg?.transactionID ?? ""}");
+    _signalRService = SignalRService(widget.arg?.transactionID ?? "");
     _signalRService.connect();
 
     return Scaffold(
@@ -120,8 +121,7 @@ class _VerifyLoginScreenState extends State<VerifyLoginScreen> {
           new HttpConnectionOptions(logger: logger, logMessageContent: true);
 
       _hubConnection = HubConnectionBuilder()
-          .withUrl("http://192.168.194.171:3333/identity-hub",
-              options: httpConnectionOptions)
+          .withUrl(ApiUrls.identityHub, options: httpConnectionOptions)
           .withAutomaticReconnect(retryDelays: [2000, 5000, 10000, 20000])
           .configureLogging(logger)
           .build();

@@ -1,10 +1,11 @@
 class ApiUrls {
-  static const baseURL = "http://192.168.194.171";
-  static const baseAuthURLWithPort = "$baseURL:222";
-  static const baseURLWithMainPortal = "$baseURL:5000";
+  static const baseURL = "https://staging-reac-api.rega.gov.sa";
+  static const baseAuthURLWithPort = "$baseURL";
+  static const baseURLWithMainPortal = "$baseURL";
   //********************auth****************************
   static const login = "$baseAuthURLWithPort/api/Account/Login";
-  static const verifyUser = "$baseAuthURLWithPort/api/Account/Login";
+  static const verifyUser = "$baseAuthURLWithPort/api/Account/VerifyUser";
+  static const identityHub = "$baseAuthURLWithPort/identity-hub";
   static const resetPassword = "";
   static const verifyOtp = "";
   // ********ClaimsList***********//

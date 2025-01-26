@@ -1,0 +1,2 @@
+json_key_file("/Users/alhazmy13/Downloads/reac-447809-c4e43df47fe2.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("sa.gov.rega.reac") # e.g. com.krausefx.app

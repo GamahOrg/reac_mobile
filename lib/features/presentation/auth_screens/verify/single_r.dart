@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:logging/logging.dart';
+import 'package:reac/app/api_urls.dart';
 import 'package:signalr_netcore/json_hub_protocol.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
@@ -12,15 +13,15 @@ class SignalRService {
   Future<void> connect() async {
 // If youn want to also to log out transport messages:
     final transportProtLogger = Logger("SignalR - transport");
-    final options = HttpConnectionOptions(
-        logger: transportProtLogger);
+    final options = HttpConnectionOptions(logger: transportProtLogger);
     final hubProtLogger = Logger("SignalR - hub");
 
-    _hubConnection = HubConnectionBuilder().withUrl(
-        'http://192.168.194.171:3333/identity-hub',
-        options: options) // Replace with your SignalR server URL
+    _hubConnection = HubConnectionBuilder()
+        .withUrl(ApiUrls.identityHub,
+            options: options) // Replace with your SignalR server URL
         .withAutomaticReconnect(retryDelays: [10000, 20000])
-        .withHubProtocol(JsonHubProtocol()).configureLogging(hubProtLogger)
+        .withHubProtocol(JsonHubProtocol())
+        .configureLogging(hubProtLogger)
         .build();
 
     // Listen for connection state changes
@@ -43,23 +44,25 @@ class SignalRService {
     });
     // Start connection
     try {
-      _hubConnection!.start()?.then((value)  {
-      print('connected');
-      sendMessage(transID);
-    });
-    _hubConnection!.on('ReceivedIdentityStatus', (arguments) {
-    print('notification');
-    print(arguments);
-    },);
-    /*
+      _hubConnection!.start()?.then((value) {
+        print('connected');
+        sendMessage(transID);
+      });
+      _hubConnection!.on(
+        'ReceivedIdentityStatus',
+        (arguments) {
+          print('notification');
+          print(arguments);
+        },
+      );
+      /*
       hubConnection.on('ReceiveNotificationMessage',_newmessages);
       await _hubConnection!.start()?.catchError((error)=>{
         print("error$error")
       });
       print('Connected to SignalR server');*/
-
     } catch (e) {
-    print('Connection failed: $e');
+      print('Connection failed: $e');
     }
   }
 

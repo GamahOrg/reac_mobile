@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:reac/features/data/request/verify_request.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
 import '../../../app/api_urls.dart';

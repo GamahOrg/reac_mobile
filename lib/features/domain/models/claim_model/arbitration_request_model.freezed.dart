@@ -26,8 +26,12 @@ mixin _$ArbitrationRequestModel {
   List<String>? get litigationRequestArbitrationReportExplanationRequestFiles =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this ArbitrationRequestModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ArbitrationRequestModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ArbitrationRequestModelCopyWith<ArbitrationRequestModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +59,8 @@ class _$ArbitrationRequestModelCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ArbitrationRequestModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -105,6 +111,8 @@ class __$$ArbitrationRequestModelImplCopyWithImpl<$Res>
       $Res Function(_$ArbitrationRequestModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ArbitrationRequestModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -181,7 +189,7 @@ class _$ArbitrationRequestModelImpl implements _ArbitrationRequestModel {
                 _litigationRequestArbitrationReportExplanationRequestFiles));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -190,7 +198,9 @@ class _$ArbitrationRequestModelImpl implements _ArbitrationRequestModel {
       const DeepCollectionEquality()
           .hash(_litigationRequestArbitrationReportExplanationRequestFiles));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ArbitrationRequestModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ArbitrationRequestModelImplCopyWith<_$ArbitrationRequestModelImpl>
@@ -222,8 +232,11 @@ abstract class _ArbitrationRequestModel implements ArbitrationRequestModel {
   String? get explanationRequests;
   @override
   List<String>? get litigationRequestArbitrationReportExplanationRequestFiles;
+
+  /// Create a copy of ArbitrationRequestModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ArbitrationRequestModelImplCopyWith<_$ArbitrationRequestModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
