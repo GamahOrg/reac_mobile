@@ -10,54 +10,13 @@ part of 'auth_api_service.dart';
 
 class _AuthServiceClient implements AuthServiceClient {
   _AuthServiceClient(
-    this._dio, {
-    this.baseUrl,
-    this.errorLogger,
-  });
+      this._dio, {
+        this.baseUrl,
+      });
 
   final Dio _dio;
 
   String? baseUrl;
-
-  final ParseErrorLogger? errorLogger;
-
-  @override
-  Future<BaseResponse<LoginResponse>> login(
-      {required LoginRequest loginRequest}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(loginRequest.toJson());
-    final _options = _setStreamType<BaseResponse<LoginResponse>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          'https://staging-reac-api.rega.gov.sa/api/Account/Login',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<LoginResponse> _value;
-    try {
-      _value = BaseResponse<LoginResponse>.fromJson(
-        _result.data!,
-        (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
-      );
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
 
   @override
   Future<BaseResponse<TransactionResponse>> verifyUser(
@@ -67,33 +26,27 @@ class _AuthServiceClient implements AuthServiceClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<BaseResponse<TransactionResponse>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse<TransactionResponse>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
           _dio.options,
-          'https://staging-reac-api.rega.gov.sa/api/Account/VerifyUser',
+          'http://192.168.194.171:5000/api/mobile/Account/VerifyUser',
           queryParameters: queryParameters,
           data: _data,
         )
-        .copyWith(
+            .copyWith(
             baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<TransactionResponse> _value;
-    try {
-      _value = BaseResponse<TransactionResponse>.fromJson(
-        _result.data!,
-        (json) => TransactionResponse.fromJson(json as Map<String, dynamic>),
-      );
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = BaseResponse<TransactionResponse>.fromJson(
+      _result.data!,
+          (json) => TransactionResponse.fromJson(json as Map<String, dynamic>),
+    );
     return _value;
   }
 
@@ -106,30 +59,24 @@ class _AuthServiceClient implements AuthServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseDM<String>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BaseDM<String>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
-          _dio.options,
-          '',
-          queryParameters: queryParameters,
-          data: _data,
-        )
+      _dio.options,
+      '',
+      queryParameters: queryParameters,
+      data: _data,
+    )
         .copyWith(
-            baseUrl: _combineBaseUrls(
+        baseUrl: _combineBaseUrls(
           _dio.options.baseUrl,
           baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseDM<String> _value;
-    try {
-      _value = BaseDM<String>.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+        ))));
+    final _value = BaseDM<String>.fromJson(_result.data!);
     return _value;
   }
 
@@ -146,30 +93,88 @@ class _AuthServiceClient implements AuthServiceClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseDM<String>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BaseDM<String>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
+      _dio.options,
+      '',
+      queryParameters: queryParameters,
+      data: _data,
+    )
+        .copyWith(
+        baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final _value = BaseDM<String>.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<BaseResponse<LoginResponse>> login(
+      {required LoginRequest loginRequest}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(loginRequest.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse<LoginResponse>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
           _dio.options,
-          '',
+          'http://192.168.194.171:222/api/Account/Login',
           queryParameters: queryParameters,
           data: _data,
         )
-        .copyWith(
+            .copyWith(
             baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseDM<String> _value;
-    try {
-      _value = BaseDM<String>.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = BaseResponse<LoginResponse>.fromJson(
+      _result.data!,
+          (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return _value;
+  }
+
+  @override
+  Future<BaseResponse<CheckStatusReponse>> checkStatus(
+      {String? transactionId}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'transactionId': transactionId};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse<CheckStatusReponse>>(Options(
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'http://192.168.194.171:5000/api/mobile/Account/CheckStatus',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(
+            baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = BaseResponse<CheckStatusReponse>.fromJson(
+      _result.data!,
+          (json) => CheckStatusReponse.fromJson(json as Map<String, dynamic>),
+    );
     return _value;
   }
 
@@ -187,9 +192,9 @@ class _AuthServiceClient implements AuthServiceClient {
   }
 
   String _combineBaseUrls(
-    String dioBaseUrl,
-    String? baseUrl,
-  ) {
+      String dioBaseUrl,
+      String? baseUrl,
+      ) {
     if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }

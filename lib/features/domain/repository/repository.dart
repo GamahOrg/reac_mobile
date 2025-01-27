@@ -6,6 +6,7 @@ import 'package:reac/features/domain/models/auth/auth_response.dart';
 import '../../../app/core/data/network/error_handler.dart';
 import '../../../app/core/domain/model/base_model.dart';
 import '../../data/request/login_request.dart';
+import '../models/auth/check_status_response.dart';
 import '../models/auth/login_response.dart';
 
 abstract class AuthRepository{
@@ -15,4 +16,5 @@ abstract class AuthRepository{
 
   Future<Either<Failure, BaseDM<String>>> resetPassword(String identityNumber);
   Future<Either<Failure, BaseDM<String>>> verifyOtp(String newMobileNumber,String otp);
+  Future<Either<Failure, BaseResponse<CheckStatusReponse>>> checkStatus(String transactionId);
 }

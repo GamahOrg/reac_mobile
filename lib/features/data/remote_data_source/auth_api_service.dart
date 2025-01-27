@@ -7,6 +7,7 @@ import '../../../app/api_urls.dart';
 import '../../../app/core/data/response/base_response.dart';
 import '../../../app/core/domain/model/base_model.dart';
 import '../../domain/models/auth/auth_response.dart';
+import '../../domain/models/auth/check_status_response.dart';
 import '../../domain/models/auth/login_response.dart';
 import '../request/login_request.dart';
 
@@ -33,4 +34,9 @@ abstract class AuthServiceClient {
   Future<BaseDM<String>> verifyOtp(
       {@Query("newMobileNumber") String? newMobileNumber,
       @Query("OTP") String? OTP});
+  @GET(ApiUrls.checkStatus)
+  Future<BaseResponse<CheckStatusReponse>> checkStatus({
+    @Query("transactionId") String? transactionId, // Optional parameter
+  });
+
 }

@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:reac/app/core/data/response/base_response.dart';
 import 'package:reac/features/data/request/verify_request.dart';
 import 'package:reac/features/domain/models/auth/auth_response.dart';
+import 'package:reac/features/domain/models/auth/check_status_response.dart';
 
 import '../../../app/core/domain/model/base_model.dart';
 import '../../domain/models/auth/login_response.dart';
@@ -16,6 +17,8 @@ abstract class AuthRemoteDataSource {
   Future<BaseDM<String>> resetPassword(String identityNumber);
 
   Future<BaseDM<String>> verifyOtp(String newMobileNumber, String otp);
+  Future<BaseResponse<CheckStatusReponse>> checkStatus(String transactionId );
+
 }
 
 @Injectable(as: AuthRemoteDataSource)
@@ -45,5 +48,11 @@ class RemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<BaseResponse<TransactionResponse>> verifyUser(
       VerifyRequest request) async {
     return await _appServiceClient.verifyUser(request: request);
+  }
+
+  @override
+  Future<BaseResponse<CheckStatusReponse>> checkStatus(String transactionId)async {
+    return await _appServiceClient.checkStatus(transactionId: transactionId);
+
   }
 }

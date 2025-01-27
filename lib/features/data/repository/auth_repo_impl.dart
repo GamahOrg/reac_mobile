@@ -6,6 +6,7 @@ import 'package:reac/app/core/data/response/base_response.dart';
 import 'package:reac/app/di/module/dio_module.dart';
 import 'package:reac/features/data/request/verify_request.dart';
 import 'package:reac/features/domain/models/auth/auth_response.dart';
+import 'package:reac/features/domain/models/auth/check_status_response.dart';
 
 import '../../../app/app_prefs.dart';
 import '../../../app/core/data/network/error_handler.dart';
@@ -24,13 +25,12 @@ class AuthRepositoryImpl implements AuthRepository {
   final AppPreferences appPreferences;
   final SafeApi safeApi;
 
-  AuthRepositoryImpl(
-    this._remoteDataSource,
-    this.appPreferences,
-    this.safeApi,
-  );
+  AuthRepositoryImpl(this._remoteDataSource,
+      this.appPreferences,
+      this.safeApi,);
 
   LoginResponse? loginResponse;
+
   @override
   Future<Either<Failure, BaseResponse<LoginResponse>>> login(
       LoginRequest loginRequest) async {
@@ -48,8 +48,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, BaseDM<String>>> verifyOtp(
-      String newMobileNumber, String otp) async {
+  Future<Either<Failure, BaseDM<String>>> verifyOtp(String newMobileNumber,
+      String otp) async {
     return await Right(BaseDM(data: "SuccessVerifyOtp"));
     // return safeApi.call(apiCall: _remoteDataSource.verifyOtp(newMobileNumber,otp));
   }
@@ -62,9 +62,28 @@ class AuthRepositoryImpl implements AuthRepository {
     return await Right(BaseDM(data: "SuccessResetPassword"));
   }
 
+
   @override
   Future<Either<Failure, BaseResponse<TransactionResponse>>> verifyUser(
       VerifyRequest request) {
     return safeApi.call(apiCall: _remoteDataSource.verifyUser(request));
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse<CheckStatusReponse>>> checkStatus(
+      String transactionId) async {
+    return safeApi
+        .call(apiCall: _remoteDataSource.checkStatus(transactionId))
+        .then((value) {
+      value.fold((l) {
+      }, (r) {
+        if(r.data?.isValid==true){
+          appPreferences.putData(
+              Constants.appPreferencesToken, r.data?.token);
+          getIt<Dio>().updateHeader();
+        }
+      });
+      return value;
+    });
   }
 }

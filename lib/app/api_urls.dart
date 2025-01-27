@@ -5,6 +5,7 @@ class ApiUrls {
   //********************auth****************************
   static const login = "$baseAuthURLWithPort/api/Account/Login";
   static const verifyUser = "$baseAuthURLWithPort/api/Account/VerifyUser";
+  static const checkStatus = "$baseURLWithMainPortal/api/mobile/Account/CheckStatus";
   static const identityHub = "$baseAuthURLWithPort/identity-hub";
   static const resetPassword = "";
   static const verifyOtp = "";
