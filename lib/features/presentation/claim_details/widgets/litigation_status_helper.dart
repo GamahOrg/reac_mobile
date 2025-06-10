@@ -12,11 +12,15 @@ class LitigationStatusHelper {
       case 3:
       case 15:
       case 21:
+      case 33:
         return const Color(0xffFCF6AE);
       case 10:
       case 2:
       case 11:
       case 1:
+      case 27:
+      case 29:
+      case 31:
         return const Color(0xffE6F2FB);
       case 7:
       case 8:
@@ -25,10 +29,16 @@ class LitigationStatusHelper {
       case 20:
       case 22:
       case 18:
+      case 32:
         return const Color(0xffE5F4D4);
       case 13:
       case 14:
+      case 26:
+      case 28:
+      case 30:
         return const Color(0xff4DC1BB).withOpacity(0.1);
+      case 25:
+        return const Color(0xffB7E9C5);
       default:
         return const Color(0xffffffff);
     }
@@ -39,12 +49,17 @@ class LitigationStatusHelper {
       case 2:
       case 11:
       case 1:
+      case 27:
+      case 29:
+      case 31:
         return const Color(0xff002F56);
       case 6:
       case 20:
       case 22:
       case 18:
-        return const Color(0xff719B37);case 24:
+      case 32:
+        return const Color(0xff719B37);
+        case 24:
       case 23:
       case 9:
       case 12:
@@ -52,13 +67,19 @@ class LitigationStatusHelper {
       case 15:
       case 21:
       case 3:
+      case 33:
         return const Color(0xffBC9711);
       case 7:
       case 8:
         return const Color(0xff002F56);
       case 13:
       case 14:
+      case 26:
+      case 28:
+      case 30:
         return const Color(0xff4DC1BB);
+      case 25:
+        return const Color(0xff19A841);
       default:
         return const Color(0xffffffff);
     }

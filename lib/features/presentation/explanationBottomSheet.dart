@@ -27,41 +27,37 @@ class ExplanationBottomSheet extends StatefulWidget {
 }
 
 class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
-
-
+  @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(
-      builder: (BuildContext context, void Function(void Function()) setState) {
-        int currentLength =widget.interpretationRulingCubit!.interpretationController.text.length;
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
+    int currentLength =
+        widget.interpretationRulingCubit!.interpretationController.text.length;
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTitleText(
+                  MyApp.tr.requestForInterpretationOfTheArbitrationAward),
+              SizedBox(height: 2.h),
+              _buildSubtitleText(MyApp.tr.requestsForInterpretation),
+              SizedBox(height: 1.h),
+              _buildTextField(currentLength),
+              SizedBox(height: 4.h),
+              _buildAttachmentSection(),
+              SizedBox(height: 1.h),
+              _buildSelectedFilesSection(),
+              SizedBox(height: 4.h),
+              _buildActionButtons(context),
+            ],
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTitleText(
-                      MyApp.tr.requestForInterpretationOfTheArbitrationAward),
-                  SizedBox(height: 2.h),
-                  _buildSubtitleText(MyApp.tr.requestsForInterpretation),
-                  SizedBox(height: 1.h),
-                  _buildTextField(context, setState, currentLength),
-                  SizedBox(height: 4.h),
-                  _buildAttachmentSection(),
-                  SizedBox(height: 1.h),
-                  _buildSelectedFilesSection(), // Update this section
-                  SizedBox(height: 4.h),
-                  _buildActionButtons(context, setState),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -87,8 +83,7 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
     );
   }
 
-  Widget _buildTextField(BuildContext context,
-      void Function(void Function()) setState, int currentLength) {
+  Widget _buildTextField(int currentLength) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -111,15 +106,23 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
                   border: InputBorder.none,
                 ),
                 cursorColor: AppColors.selectedTextTab,
-                controller: widget.interpretationRulingCubit!.interpretationController,
+                controller:
+                widget.interpretationRulingCubit!.interpretationController,
                 onChanged: (value) {
                   setState(() {
-                    if (currentLength > widget.interpretationRulingCubit!.maxLength) {
-                      widget.interpretationRulingCubit!.interpretationController.text =
-                      widget.interpretationRulingCubit!.interpretationController.text.substring(0, widget.interpretationRulingCubit!.maxLength);
-                      widget.interpretationRulingCubit!.interpretationController.selection =
-                          TextSelection.fromPosition(
-                              TextPosition(offset: widget.interpretationRulingCubit!.maxLength));
+                    if (currentLength >
+                        widget.interpretationRulingCubit!.maxLength) {
+                      widget.interpretationRulingCubit!.interpretationController
+                          .text =
+                          widget.interpretationRulingCubit!
+                              .interpretationController.text
+                              .substring(
+                              0, widget.interpretationRulingCubit!.maxLength);
+                      widget.interpretationRulingCubit!.interpretationController
+                          .selection =
+                          TextSelection.fromPosition(TextPosition(
+                              offset: widget
+                                  .interpretationRulingCubit!.maxLength));
                     }
                   });
                 },
@@ -167,18 +170,24 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
         InkWell(
           onTap: () async {
             await widget.interpretationRulingCubit!.pickFiles();
-            List<File> files =
-            widget.interpretationRulingCubit!.result!.paths.map((path) => File(path!)).toList();
-            await widget.interpretationRulingCubit?.uploadFile(
-              uploadFileRequest: UploadFileRequest(
-                Id: "00000000-0000-0000-0000-000000000000",
-                Files: files,
-              ),
-            );
-            widget.interpretationRulingCubit!.ids = widget.interpretationRulingCubit!.uploadFileResponse
-                .orEmpty()
-                .map((e) => e.id.toString())
-                .toList();
+            if (widget.interpretationRulingCubit!.result != null) {
+              List<File> files = widget.interpretationRulingCubit!.result!.paths
+                  .map((path) => File(path!))
+                  .toList();
+              await widget.interpretationRulingCubit?.uploadFile(
+                uploadFileRequest: UploadFileRequest(
+                  Id: "00000000-0000-0000-0000-000000000000",
+                  Files: files,
+                ),
+              );
+              widget.interpretationRulingCubit!.ids = widget
+                  .interpretationRulingCubit!.uploadFileResponse
+                  .orEmpty()
+                  .map((e) => e.id.toString())
+                  .toList();
+
+              setState(() {}); // Trigger UI update
+            }
           },
           child: DottedBorder(
             borderType: BorderType.Rect,
@@ -237,76 +246,102 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
       return const SizedBox();
     }
 
-    String? extension = cubit.getFileExtension(cubit.result!.files.first.name);
-    String? filePath = cubit.result!.files.first.path; // Get the file path
-
-    bool isImage(String? extension) {
-      return extension == 'png' || extension == 'jpg' || extension == 'jpeg';
-    }
-
-    String getFileAsset(String? extension) {
-      switch (extension?.toLowerCase()) {
-        case "docx":
-          return AppAssets.bgDocx;
-        case "pdf":
-          return AppAssets.bgPdf;
-        case "xls":
-          return AppAssets.bgXls;
-        default:
-          return AppAssets.bgPng;
-      }
-    }
-    print('File picked: $filePath, Extension: $extension');
-
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Container(
-            width: double.infinity*0.5,
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: const Color(0xffe5e9ef),
-              border: Border.all(color: AppColors.selectedTextTab),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (filePath != null && isImage(extension))
-                  Image.file(
-                    File(filePath),
-                    width: 17.w,
-                    height: 10.h,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.error);  // Fallback if the image doesn't load
-                    },
-                  )
-                else
-                  Image(
-                    width: 17.w,
-                    height: 10.h,
-                    fit: BoxFit.contain,
-                    image: AssetImage(getFileAsset(extension)),
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.error);
-                    },
-                  ),
-              ],
+    return Column(
+      children: [
+        Align(
+          alignment: AlignmentDirectional.topEnd,
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                cubit.result = null; // Clear the selected files
+                cubit.ids?.clear(); // Clear the uploaded file IDs
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
+              decoration: BoxDecoration(
+                color: AppColors.selectedTextTab,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.delete_forever_outlined, size: 12.sp, color: Colors.white),
+                ],
+              ),
             ),
           ),
-        );
-      },
+        ),
+        SizedBox(height: 1.h),
+        ...cubit.result!.files.map((file) {
+          String? extension = cubit.getFileExtension(file.name);
+          String? filePath = file.path;
+
+          bool isImage(String? extension) {
+            return extension == 'png' || extension == 'jpg' || extension == 'jpeg';
+          }
+
+          String getFileAsset(String? extension) {
+            switch (extension?.toLowerCase()) {
+              case "docx":
+                return AppAssets.bgDocx;
+              case "pdf":
+                return AppAssets.bgPdf;
+              case "xls":
+                return AppAssets.bgXls;
+              default:
+                return AppAssets.bgPng;
+            }
+          }
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Container(
+              width: double.infinity * 0.5,
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xffe5e9ef),
+                border: Border.all(color: AppColors.selectedTextTab),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (filePath != null && isImage(extension))
+                    Image.file(
+                      File(filePath),
+                      width: 17.w,
+                      height: 10.h,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.error);
+                      },
+                    )
+                  else
+                    Image(
+                      width: 17.w,
+                      height: 10.h,
+                      fit: BoxFit.contain,
+                      image: AssetImage(getFileAsset(extension)),
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.error);
+                      },
+                    ),
+                  SizedBox(height: 1.h),
+                  Text(
+                    file.name,
+                    style: TextStyle(fontSize: 10.sp),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
+      ],
     );
   }
 
-
-
-
-
-  Widget _buildActionButtons(
-      BuildContext context, void Function(void Function()) setState) {
+  Widget _buildActionButtons(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -320,6 +355,10 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
             fontWeight: FontWeight.w700,
             textColor: AppColors.selectedTextTab,
             onTap: () {
+              setState(() {
+                widget.interpretationRulingCubit!.result = null; // Clear the selected files
+                widget.interpretationRulingCubit!.ids?.clear(); // Clear the uploaded file IDs
+              });
               Navigator.pop(context);
             },
           ),
@@ -328,21 +367,27 @@ class _ExplanationBottomSheetState extends State<ExplanationBottomSheet> {
         Expanded(
           flex: 2,
           child: DefaultButton(
-              radius: 30,
-              firstGradientColor: AppColors.selectedTextTab,
-              secondGradientColor: AppColors.selectedTextTab,
-              title: MyApp.tr.send,
-              fontSize: 11.sp,
-              fontWeight: FontWeight.w700,
-              textColor: Colors.white,
-              onTap: () {
-                Navigator.pop(context,widget.interpretationRulingCubit?.executeAddArbitrationRequest(
-                    arbitrationRequestModel: ArbitrationRequestModel(
-                        litigationRequestId: widget.litigationRequestId,
-                        litigationRequestArbitrationReportExplanationRequestFiles:
-                        widget.interpretationRulingCubit!.ids,
-                        explanationRequests: widget.interpretationRulingCubit!.interpretationController.text)));
-              }),
+            radius: 30,
+            firstGradientColor: AppColors.selectedTextTab,
+            secondGradientColor: AppColors.selectedTextTab,
+            title: MyApp.tr.send,
+            fontSize: 11.sp,
+            fontWeight: FontWeight.w700,
+            textColor: Colors.white,
+            onTap: () {
+              Navigator.pop(
+                  context,
+                  widget.interpretationRulingCubit?.executeAddArbitrationRequest(
+                      arbitrationRequestModel: ArbitrationRequestModel(
+                          litigationRequestId: widget.litigationRequestId,
+                          litigationRequestArbitrationReportExplanationRequestFiles:
+                          widget.interpretationRulingCubit!.ids,
+                          explanationRequests: widget
+                              .interpretationRulingCubit!
+                              .interpretationController
+                              .text)));
+            },
+          ),
         ),
       ],
     );

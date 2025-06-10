@@ -1,11 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:reac/app/core/data/response/base_response.dart';
 import 'package:reac/app/function.dart';
 import 'package:reac/features/domain/models/claim_model/details_response_model.dart';
 import 'package:reac/features/domain/models/claim_model/number_of_arbitrations.dart';
 import 'package:reac/features/domain/models/claim_model/number_of_arbitrations_request_model.dart';
 import 'package:reac/features/domain/use_cases/claim/get_arbitrators_count_List_use_case.dart';
 import 'package:reac/features/domain/use_cases/claim/get_number_of_arbitration_panel_use_case.dart';
+import 'package:reac/features/domain/use_cases/claim/sendLitigationFeesRequestPaidUseCase.dart';
 import '../../domain/models/claim_model/cliam_model.dart';
 import '../../domain/use_cases/claim/get_number_of_arbitrations_use_case.dart';
 import '../../domain/use_cases/claim/number_of_arbitrations_request_use_case.dart';
@@ -18,12 +20,14 @@ class NumberOfArbitrationPanelCubit extends Cubit<ClaimStates> {
   GetNumberOfArbitrationPanelUseCase getNumberOfArbitrationPanelUseCase;
   GetArbitratorsCountListUseCase   getArbitratorsCountListUseCase;
   GetNumberOfArbitrationUseCase    getNumberOfArbitrationUseCase;
+  SendLitigationFeesRequestPaidUseCase    sendLitigationFeesRequestPaidUseCase;
   NumberOfArbitrationRequestUseCase numberOfArbitrationRequestUseCase;
   DetailsResponseModel? numberOfArbitrationPanelModel;
   DetailsResponseModel? numberOfArbitrationPanelModelResponse;
   List<NumberOfArbitrationsModel>? numberOfArbitrationsModel;
   ClaimResponse? arbitratorsCountReplyModel;
-  NumberOfArbitrationPanelCubit(this.getArbitratorsCountListUseCase,this.getNumberOfArbitrationPanelUseCase,this.getNumberOfArbitrationUseCase,this.numberOfArbitrationRequestUseCase)
+  BaseResponse? baseResponse;
+  NumberOfArbitrationPanelCubit(this.sendLitigationFeesRequestPaidUseCase,this.getArbitratorsCountListUseCase,this.getNumberOfArbitrationPanelUseCase,this.getNumberOfArbitrationUseCase,this.numberOfArbitrationRequestUseCase)
       : super(IdleState(retryActionFunction: () {}));
 
   static NumberOfArbitrationPanelCubit get(context) => BlocProvider.of(context);
@@ -90,6 +94,18 @@ class NumberOfArbitrationPanelCubit extends Cubit<ClaimStates> {
         hasNextPage = true;
       }
       emit(SuccessState(data, message: 'Data loaded successfully!'));
+    });
+  }
+
+  Future<void> sendLitigationFeesRequestPaid({required String id}) async {
+    emit(const LoadingState());
+    sendLitigationFeesRequestPaidUseCase.litigationId = id;
+    var response = await sendLitigationFeesRequestPaidUseCase.execute();
+    response.fold((error) {
+      emit(ErrorState(error.toString(), message: error.message.toString()));
+    }, (data) {
+      baseResponse = data.data;
+      emit(SuccessStateSendLitigationFeesRequestPaid(data, message: 'تم سداد رسوم الدعوى بنجاح'));
     });
   }
 

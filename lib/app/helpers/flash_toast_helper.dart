@@ -19,7 +19,7 @@ class FlashToastHelper {
       context: context,
       persistent: true,
       transitionDuration: const Duration(milliseconds: 400),
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 10),
       builder: (context, controller) {
         return Flash(
           position: FlashPosition.bottom,
@@ -106,7 +106,7 @@ class FlashToastHelper {
                               content,
                               // style: RequestBuilderInitializer
                               //     .instance.messageTextStyle,
-                              maxLines: 2,
+                              maxLines: 15,
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(

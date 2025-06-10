@@ -4,6 +4,7 @@ import 'package:reac/app/extensions.dart';
 import 'package:reac/features/presentation/manager/claim_details_cubit.dart';
 
 import '../../../../app/default_button.dart';
+import '../../../../app/function.dart';
 import '../../../../my_app.dart';
 import '../../../domain/models/claim_model/details_response_model.dart';
 
@@ -12,11 +13,12 @@ class ClaimMainButton extends StatelessWidget {
   DetailsResponseModel? cubit;
   StepsClaims? typeStep;
   void Function() callBack;
-
   ClaimMainButton({super.key, this.status, required this.callBack,this.cubit,this.typeStep});
 
   @override
   Widget build(BuildContext context) {
+    dPrint(typeStep.toString());
+    dPrint("typeStep.toString()");
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 4.w),
       child: DefaultButton(
@@ -41,6 +43,8 @@ class ClaimMainButton extends StatelessWidget {
       name = MyApp.tr.appointmentOfMembersOfTheArbitrationPanel;
     } else if (typeStep?.text == StepsClaims.determineTheNumberOfArbitrators.text) {
       name = MyApp.tr.determineTheNumberOfArbitrators;
+    }else if (status== 26) {
+      name = "سداد الرسوم";
     }
     return name;
   }

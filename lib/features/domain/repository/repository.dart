@@ -2,11 +2,11 @@ import 'package:dartz/dartz.dart';
 import 'package:reac/app/core/data/response/base_response.dart';
 import 'package:reac/features/data/request/verify_request.dart';
 import 'package:reac/features/domain/models/auth/auth_response.dart';
+import 'package:reac/features/domain/models/auth/check_status_response.dart';
 
 import '../../../app/core/data/network/error_handler.dart';
 import '../../../app/core/domain/model/base_model.dart';
 import '../../data/request/login_request.dart';
-import '../models/auth/check_status_response.dart';
 import '../models/auth/login_response.dart';
 
 abstract class AuthRepository{

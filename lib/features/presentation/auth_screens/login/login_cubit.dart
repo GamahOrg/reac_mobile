@@ -18,8 +18,8 @@ import '../../../domain/use_cases/auth/check_status_use_case.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._useCase, this.verifyUserUseCase, this.checkStatusUseCase)
       : super(IdleState(
-      retryActionFunction:
-          () {})); // Set to IdleState or another suitable initial state
+            retryActionFunction:
+                () {})); // Set to IdleState or another suitable initial state
 
   final LoginUseCase _useCase;
   final VerifyUserUseCase verifyUserUseCase;
@@ -34,43 +34,42 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> verifyUser(String nationalNumber) async {
     verifyUserUseCase.nationalId = nationalNumber;
     verifyUserUseCase.execute().then((value) => value.fold((failure) {
-      emit(ErrorState(failure.message));
-    }, (data) {
-      if (data.isDone!) {
-        transactionResponse = data.data!;
-        print("Cubit${transactionResponse.data?.transId ?? ""}");
-        emit(SuccessState("", message: MyApp.tr.success));
-      } else {
-        emit(ErrorState(data.message!));
-      }
-    }));
+          emit(ErrorState(failure.message));
+        }, (data) {
+          if (data.isDone!) {
+            transactionResponse = data.data!;
+            print("Cubit${transactionResponse.data?.transId ?? ""}");
+            emit(SuccessState("", message: MyApp.tr.success));
+          } else {
+            emit(ErrorState(data.message!));
+          }
+        }));
   }
 
   Future<void> checkStatusUser(String transactionId) async {
     const Duration delayBetweenCalls =
-    Duration(seconds: 5); // Delay between API calls
+        Duration(seconds: 5); // Delay between API calls
     await Future.delayed(delayBetweenCalls);
 
     checkStatusUseCase.transactionId = transactionId;
     await checkStatusUseCase.execute().then((value) => value.fold((failure) {
       emit(ErrorState(failure.message));
-    }, (data) async {
-      if (data.data?.isValid == true) {
-        checkStatusReponse = data;
-        emit(SuccessState("", message: MyApp.tr.success));
-        return;
-      } else {
-        await Future.delayed(delayBetweenCalls);
-        checkStatusUser(transactionId);
-
-      }
-    }));
+        }, (data) async {
+          if (data.data?.isValid == true) {
+            checkStatusReponse = data;
+            emit(SuccessState("", message: MyApp.tr.success));
+            return;
+          } else {
+            await Future.delayed(delayBetweenCalls);
+            checkStatusUser(transactionId);
+          }
+        }));
   }
 
   Future<void> login(
-      String nationalNumber,
-      String password,
-      ) async {
+    String nationalNumber,
+    String password,
+  ) async {
     emit(const LoadingState());
     verifyUser(nationalNumber);
 

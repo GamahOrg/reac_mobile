@@ -11,6 +11,7 @@ import '../../domain/models/claim_model/agreement_model.dart';
 import '../../domain/models/claim_model/claim_event_model.dart';
 import '../../domain/models/claim_model/cliam_model.dart';
 import '../../domain/models/claim_model/details_response_model.dart';
+import '../../domain/models/claim_model/list _of_ reconciliation _sessions_model.dart';
 import '../../domain/models/claim_model/number_of_arbitrations.dart';
 import '../../domain/models/claim_model/number_of_arbitrations_request_model.dart';
 import '../../domain/models/claim_model/selection_arbitrator_body.dart';
@@ -44,6 +45,9 @@ abstract class ClaimRemoteDataSource {
   Future<BaseResponse<ClaimResponse>> reconciliationListApi(int pageSize, int pageIndex,);
   Future<BaseResponse<ClaimResponse>> getInterpretationListApi(int pageSize, int pageIndex,);
   Future<BaseResponse<ClaimResponse>> getAgreementListApi(int pageSize, int pageIndex,);
+  Future<BaseResponse<ReconciliationSessionsModel>> getLitigationRequestForAllSessionApi(int pageSize, int pageIndex,);
+  Future<BaseResponse<ReconciliationSessionsModel>> getArbitrationSessionLitigationRequestForAllSession(int pageSize, int pageIndex,);
+  Future<BaseResponse> sendLitigationFeesRequestPaid(String litigationId);
   Future<BaseResponse<NotificationModel>> getNotificationListApi();
 
 }
@@ -179,6 +183,24 @@ class ClaimRemoteDataSourceImpl implements ClaimRemoteDataSource {
   @override
   Future<BaseResponse<NotificationModel>> getNotificationListApi() async{
     return await claimServiceClient.getNotificationListApi();
+  }
+
+  @override
+  Future<BaseResponse<ReconciliationSessionsModel>> getLitigationRequestForAllSessionApi(int pageSize, int pageIndex) async{
+    return await claimServiceClient.getLitigationRequestForAllSessionApi(pageSize,pageIndex);
+
+  }
+
+  @override
+  Future<BaseResponse<ReconciliationSessionsModel>> getArbitrationSessionLitigationRequestForAllSession(int pageSize, int pageIndex) async{
+    return await claimServiceClient.getArbitrationSessionLitigationRequestForAllSession(pageSize,pageIndex);
+
+  }
+
+  @override
+  Future<BaseResponse> sendLitigationFeesRequestPaid(String litigationId) async{
+    return await claimServiceClient.sendLitigationFeesRequestPaid(litigationId);
+
   }
 
 }

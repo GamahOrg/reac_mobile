@@ -18,8 +18,10 @@ import 'package:reac/features/presentation/manager/notification_cubit.dart';
 import 'package:reac/features/presentation/number_arbitrators_list.dart';
 import 'package:reac/features/presentation/reconcilition_list.dart';
 import 'package:reac/features/presentation/setting_screen.dart';
+import 'package:reac/features/presentation/widgets/GetLitigationRequestForAllSessionScreen.dart';
 import 'package:reac/features/presentation/widgets/custom_extention_tile.dart';
 import 'package:reac/features/presentation/widgets/custom_text_form_field.dart';
+import 'package:reac/features/presentation/widgets/getArbitrationSessionLitigationRequestForAllSessionScreen.dart';
 import 'package:reac/my_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,11 +52,16 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
   void loadMore() async {
     if (cubit.hasNextPage) {
       cubit.pageIndex++;
-    await cubit.execute(
-        searchKey: searchController.text,
-      );
-    } else {
-      dPrint("Conditions not met for loading more data");
+
+      final currentPosition = _scrollController.position.pixels;
+
+      await cubit.execute(searchKey: searchController.text);
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(currentPosition);
+        }
+      });
     }
   }
 
@@ -84,7 +91,7 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => cubit),
+          BlocProvider.value(value: cubit),
           BlocProvider(
               create: (context) => getIt<NotificationCubit>()..execute())
         ],
@@ -143,11 +150,11 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
                                         ),
                                       ),
                                       SizedBox(width: 3.w),
-                                      CircleAvatar(
-                                        radius: 21,
-                                        backgroundImage:
-                                            AssetImage(AppAssets.bgOwner),
-                                      ),
+                                      // CircleAvatar(
+                                      //   radius: 21,
+                                      //   backgroundImage:
+                                      //       AssetImage(AppAssets.bgOwner),
+                                      // ),
                                     ],
                                   )
                                 ],
@@ -173,30 +180,36 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
                                     Navigator.pushNamed(
                                         context, AgreementListScreen.id);
                                   }),
-                                  // _buildMenuItem(
-                                  //     MyApp.tr.listOfReconciliationSessions, () {}),
+                                  _buildMenuItem(
+                                      MyApp.tr.listOfReconciliationSessions, () {
+                                    Navigator.pushNamed(
+                                        context, GetLitigationRequestForAllSessionScreen.id);
+                                  }),
                                   _buildMenuItem(
                                       MyApp.tr.minutesOfTheSettlement, () {
                                     Navigator.pushNamed(
                                         context, ReconciliationList.id);
                                   }),
-                                  // _buildMenuItem(
-                                  //     MyApp.tr.listOfArbitrationSessions, () {}),
+                                  _buildMenuItem(
+                                      MyApp.tr.listOfArbitrationSessions, () {
+                                    Navigator.pushNamed(
+                                        context, GetArbitrationSessionLitigationRequestForAllSessionScreen.id);
+                                  }),
                                   _buildMenuItem(
                                       MyApp.tr.determineTheNumberOfArbitrators,
                                       () {
                                     Navigator.pushNamed(
                                         context, NumberArbitratorsList.id);
                                   }),
-                                  _buildMenuItem(
-                                      MyApp.tr
-                                          .appointmentOfMembersOfTheArbitrationPanel,
-                                      () {
-                                    Navigator.pushNamed(
-                                        context,
-                                        AppointmentMembersArbitrationPanelList
-                                            .id);
-                                  }),
+                                  // _buildMenuItem(
+                                  //     MyApp.tr
+                                  //         .appointmentOfMembersOfTheArbitrationPanel,
+                                  //     () {
+                                  //   Navigator.pushNamed(
+                                  //       context,
+                                  //       AppointmentMembersArbitrationPanelList
+                                  //           .id);
+                                  // }),
                                   _buildMenuItem(MyApp.tr.arbitrationAwards,
                                       () {
                                     Navigator.pushNamed(
@@ -209,8 +222,8 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
                                     Navigator.pushNamed(
                                         context, InterpretationListScreen.id);
                                   }),
-                                  // _buildMenuItem(
-                                  //     MyApp.tr.requestForArbitratorResponse, () {}),
+                                  _buildMenuItem(
+                                      MyApp.tr.requestForArbitratorResponse, () {}),
                                 ],
                               ),
                             ),
@@ -358,6 +371,7 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
                                         itemBuilder: (context, index) {
                                           return LawsuitCard(
                                               onTap: () {
+                                                dPrint("fgdffgddgfdgfgf");
                                                 Navigator.pushNamed(
                                                     context, ClaimDetails.id,
                                                     arguments:
@@ -510,6 +524,7 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
               textColor: Colors.white,
               onTap: () {
                 cubit.pageIndex = 1;
+                _scrollController.jumpTo(0); // <---- ADD THIS
                 Navigator.pop(context, cubit.execute());
               },
             ),
@@ -591,6 +606,7 @@ class _ClaimsScreenState extends State<ClaimsScreen> {
         controller: searchController,
         onFieldSubmitted: (value) {
           cubit.pageIndex = 1;
+          _scrollController.jumpTo(0); // <---- ADD THIS
           cubit.execute(searchKey: searchController.text);
         },
         hinText: MyApp.tr.search_,

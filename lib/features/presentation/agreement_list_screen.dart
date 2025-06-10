@@ -27,10 +27,15 @@ class _AgreementListScreenState extends State<AgreementListScreen> {
   void loadMore() async {
     if (agreementCubit.hasNextPage) {
       agreementCubit.pageIndex++;
-      await agreementCubit.execute(
-      );
-    } else {
-      dPrint("Conditions not met for loading more data");
+      final currentPosition = _scrollController.position.pixels;
+
+      await agreementCubit.execute();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(currentPosition);
+        }
+      });
     }
   }
 

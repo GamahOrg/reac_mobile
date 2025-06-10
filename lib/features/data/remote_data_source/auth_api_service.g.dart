@@ -10,9 +10,9 @@ part of 'auth_api_service.dart';
 
 class _AuthServiceClient implements AuthServiceClient {
   _AuthServiceClient(
-      this._dio, {
-        this.baseUrl,
-      });
+    this._dio, {
+    this.baseUrl,
+  });
 
   final Dio _dio;
 
@@ -28,24 +28,24 @@ class _AuthServiceClient implements AuthServiceClient {
     _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse<TransactionResponse>>(Options(
-          method: 'POST',
-          headers: _headers,
-          extra: _extra,
-        )
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
             .compose(
-          _dio.options,
-          'http://192.168.194.171:5000/api/mobile/Account/VerifyUser',
-          queryParameters: queryParameters,
-          data: _data,
-        )
+              _dio.options,
+              'https://dev-reac-api.rega.gov.sa/api/Account/VerifyUser',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(
-            baseUrl: _combineBaseUrls(
+                baseUrl: _combineBaseUrls(
               _dio.options.baseUrl,
               baseUrl,
             ))));
     final _value = BaseResponse<TransactionResponse>.fromJson(
       _result.data!,
-          (json) => TransactionResponse.fromJson(json as Map<String, dynamic>),
+      (json) => TransactionResponse.fromJson(json as Map<String, dynamic>),
     );
     return _value;
   }
@@ -65,17 +65,17 @@ class _AuthServiceClient implements AuthServiceClient {
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-      _dio.options,
-      '',
-      queryParameters: queryParameters,
-      data: _data,
-    )
-        .copyWith(
-        baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              '',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final _value = BaseDM<String>.fromJson(_result.data!);
     return _value;
   }
@@ -99,17 +99,17 @@ class _AuthServiceClient implements AuthServiceClient {
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-      _dio.options,
-      '',
-      queryParameters: queryParameters,
-      data: _data,
-    )
-        .copyWith(
-        baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              '',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final _value = BaseDM<String>.fromJson(_result.data!);
     return _value;
   }
@@ -124,24 +124,24 @@ class _AuthServiceClient implements AuthServiceClient {
     _data.addAll(loginRequest.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse<LoginResponse>>(Options(
-          method: 'POST',
-          headers: _headers,
-          extra: _extra,
-        )
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
             .compose(
-          _dio.options,
-          'http://192.168.194.171:222/api/Account/Login',
-          queryParameters: queryParameters,
-          data: _data,
-        )
+              _dio.options,
+              'https://dev-reac-api.rega.gov.sa/api/Account/Login',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(
-            baseUrl: _combineBaseUrls(
+                baseUrl: _combineBaseUrls(
               _dio.options.baseUrl,
               baseUrl,
             ))));
     final _value = BaseResponse<LoginResponse>.fromJson(
       _result.data!,
-          (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
+      (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
     );
     return _value;
   }
@@ -156,24 +156,24 @@ class _AuthServiceClient implements AuthServiceClient {
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse<CheckStatusReponse>>(Options(
-          method: 'GET',
-          headers: _headers,
-          extra: _extra,
-        )
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
             .compose(
-          _dio.options,
-          'http://192.168.194.171:5000/api/mobile/Account/CheckStatus',
-          queryParameters: queryParameters,
-          data: _data,
-        )
+              _dio.options,
+              'https://dev-reac-api.rega.gov.sa/api/Account/CheckStatus',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(
-            baseUrl: _combineBaseUrls(
+                baseUrl: _combineBaseUrls(
               _dio.options.baseUrl,
               baseUrl,
             ))));
     final _value = BaseResponse<CheckStatusReponse>.fromJson(
       _result.data!,
-          (json) => CheckStatusReponse.fromJson(json as Map<String, dynamic>),
+      (json) => CheckStatusReponse.fromJson(json as Map<String, dynamic>),
     );
     return _value;
   }
@@ -192,9 +192,9 @@ class _AuthServiceClient implements AuthServiceClient {
   }
 
   String _combineBaseUrls(
-      String dioBaseUrl,
-      String? baseUrl,
-      ) {
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
     if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }

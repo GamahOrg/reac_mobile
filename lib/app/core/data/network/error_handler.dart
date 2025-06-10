@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:reac/app/extensions.dart';
 
 import '../../../function.dart';
 
@@ -14,42 +15,45 @@ class ErrorHandler implements Exception {
       failure = _handleError(error);
     } else {
       // default error
-      failure = DataSource.DEFAULT.getFailure();
+      print("fdsfdsfsdfds");
+      failure = _handleError(error);
+      //failure = DataSource.DEFAULT.getFailure();
     }
   }
 }
 
 Failure _handleError(DioException error) {
-  switch (error.type) {
-    case DioExceptionType.connectionTimeout:
-      return DataSource.CONNECT_TIMEOUT.getFailure();
-    case DioExceptionType.sendTimeout:
-      return DataSource.SEND_TIMEOUT.getFailure();
-    case DioExceptionType.receiveTimeout:
-      return DataSource.RECIEVE_TIMEOUT.getFailure();
-    case DioExceptionType.badResponse:
-      if (error.response != null &&
-          error.response?.statusCode != null &&
-          error.response?.statusMessage != null) {
-        if(error.response?.statusCode==ResponseCode.UNAUTORISED){
-          /// user must be log out
-          //logoutAndNavigateToLogin();
-          return DataSource.UNAUTORISED.getFailure();
-
-        }
-        String message = tryToGetMessageFromResponse(error.response!, error.response!.statusMessage!);
-        return Failure(error.response?.statusCode ?? 0,
-            message);
-      } else {
-        return DataSource.DEFAULT.getFailure();
-      }
-    case DioExceptionType.cancel:
-      return DataSource.CANCEL.getFailure();
-    case DioExceptionType.unknown:
-    case DioExceptionType.badCertificate:
-    case DioExceptionType.connectionError:
-      return DataSource.DEFAULT.getFailure();
-  }
+  return Failure(0, error.message.orEmpty());
+  // switch (error.type) {
+  //   case DioExceptionType.connectionTimeout:
+  //     return DataSource.CONNECT_TIMEOUT.getFailure();
+  //   case DioExceptionType.sendTimeout:
+  //     return DataSource.SEND_TIMEOUT.getFailure();
+  //   case DioExceptionType.receiveTimeout:
+  //     return DataSource.RECIEVE_TIMEOUT.getFailure();
+  //   case DioExceptionType.badResponse:
+  //     if (error.response != null &&
+  //         error.response?.statusCode != null &&
+  //         error.response?.statusMessage != null) {
+  //       if(error.response?.statusCode==ResponseCode.UNAUTORISED){
+  //         /// user must be log out
+  //         //logoutAndNavigateToLogin();
+  //         return DataSource.UNAUTORISED.getFailure();
+  //
+  //       }
+  //       String message = tryToGetMessageFromResponse(error.response!, error.response!.statusMessage!);
+  //       return Failure(error.response?.statusCode ?? 0,
+  //           message);
+  //     } else {
+  //       return DataSource.DEFAULT.getFailure();
+  //     }
+  //   case DioExceptionType.cancel:
+  //     return DataSource.CANCEL.getFailure();
+  //   case DioExceptionType.unknown:
+  //   case DioExceptionType.badCertificate:
+  //   case DioExceptionType.connectionError:
+  //     return DataSource.DEFAULT.getFailure();
+  // }
 }
 
 

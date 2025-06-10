@@ -35,7 +35,15 @@ LitigationRequestShortDto _$LitigationRequestShortDtoFromJson(
       requestCode: json['requestCode'] as String?,
       cityName: json['cityName'] as String?,
       areaName: json['areaName'] as String?,
+      reformerCitizen: json['reformerCitizen'] == null
+          ? null
+          : ReformerCitizen.fromJson(
+              json['reformerCitizen'] as Map<String, dynamic>),
       contractAddress: json['contractAddress'] as String?,
+      mintuesOfMeetingApprovalPlaintiffStatus:
+          (json['mintuesOfMeetingApprovalPlaintiffStatus'] as num?)?.toInt(),
+      mintuesOfMeetingApprovalDefendantStatus:
+          (json['mintuesOfMeetingApprovalDefendantStatus'] as num?)?.toInt(),
       title: json['title'] as String?,
       description: json['description'] as String?,
       isFinancialLitigation: json['isFinancialLitigation'] as bool?,
@@ -79,16 +87,31 @@ Map<String, dynamic> _$LitigationRequestShortDtoToJson(
       'contractAddress': instance.contractAddress,
       'title': instance.title,
       'description': instance.description,
+      'mintuesOfMeetingApprovalPlaintiffStatus':
+          instance.mintuesOfMeetingApprovalPlaintiffStatus,
+      'mintuesOfMeetingApprovalDefendantStatus':
+          instance.mintuesOfMeetingApprovalDefendantStatus,
       'isFinancialLitigation': instance.isFinancialLitigation,
       'isExemptionReduction': instance.isExemptionReduction,
       'applicantCitizen': instance.applicantCitizen,
       'contract': instance.contract,
+      'reformerCitizen': instance.reformerCitizen,
       'externalStatus': instance.externalStatus,
       'internalStatus': instance.internalStatus,
       'litigationRequestAmount': instance.litigationRequestAmount,
       'litigationRequestCategory': instance.litigationRequestCategory,
       'litigationRequestOwnerType': instance.litigationRequestOwnerType,
       'id': instance.id,
+    };
+
+ReformerCitizen _$ReformerCitizenFromJson(Map<String, dynamic> json) =>
+    ReformerCitizen(
+      fullName: json['fullName'] as String?,
+    );
+
+Map<String, dynamic> _$ReformerCitizenToJson(ReformerCitizen instance) =>
+    <String, dynamic>{
+      'fullName': instance.fullName,
     };
 
 ApplicantCitizen _$ApplicantCitizenFromJson(Map<String, dynamic> json) =>

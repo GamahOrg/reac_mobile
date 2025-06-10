@@ -67,6 +67,10 @@ LitigationRequestShortDto _$LitigationRequestShortDtoFromJson(
       requestCode: json['requestCode'] as String?,
       cityName: json['cityName'] as String?,
       areaName: json['areaName'] as String?,
+      arbitratorCitizen: json['arbitratorCitizen'] == null
+          ? null
+          : ArbitratorCitizen.fromJson(
+              json['arbitratorCitizen'] as Map<String, dynamic>),
       contractAddress: json['contractAddress'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,
@@ -84,10 +88,15 @@ LitigationRequestShortDto _$LitigationRequestShortDtoFromJson(
           : ExternalStatus.fromJson(
               json['internalStatus'] as Map<String, dynamic>),
       id: json['id'] as String?,
-    )..litigationRequestCategory = json['litigationRequestCategory'] == null
-        ? null
-        : LitigationRequestCategory.fromJson(
-            json['litigationRequestCategory'] as Map<String, dynamic>);
+    )
+      ..litigationRequestCategory = json['litigationRequestCategory'] == null
+          ? null
+          : LitigationRequestCategory.fromJson(
+              json['litigationRequestCategory'] as Map<String, dynamic>)
+      ..litigationRequestAmount = json['litigationRequestAmount'] == null
+          ? null
+          : LitigationRequestAmount.fromJson(
+              json['litigationRequestAmount'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$LitigationRequestShortDtoToJson(
         LitigationRequestShortDto instance) =>
@@ -102,9 +111,39 @@ Map<String, dynamic> _$LitigationRequestShortDtoToJson(
       'isExemptionReduction': instance.isExemptionReduction,
       'contract': instance.contract,
       'litigationRequestCategory': instance.litigationRequestCategory,
+      'litigationRequestAmount': instance.litigationRequestAmount,
       'externalStatus': instance.externalStatus,
       'internalStatus': instance.internalStatus,
+      'arbitratorCitizen': instance.arbitratorCitizen,
       'id': instance.id,
+    };
+
+LitigationRequestAmount _$LitigationRequestAmountFromJson(
+        Map<String, dynamic> json) =>
+    LitigationRequestAmount(
+      fees: (json['fees'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$LitigationRequestAmountToJson(
+        LitigationRequestAmount instance) =>
+    <String, dynamic>{
+      'fees': instance.fees,
+    };
+
+ArbitratorCitizen _$ArbitratorCitizenFromJson(Map<String, dynamic> json) =>
+    ArbitratorCitizen(
+      mobile: json['mobile'] as String?,
+      identityNumber: json['identityNumber'] as String?,
+      fullName: json['fullName'] as String?,
+      email: json['email'] as String?,
+    );
+
+Map<String, dynamic> _$ArbitratorCitizenToJson(ArbitratorCitizen instance) =>
+    <String, dynamic>{
+      'mobile': instance.mobile,
+      'email': instance.email,
+      'identityNumber': instance.identityNumber,
+      'fullName': instance.fullName,
     };
 
 LitigationRequestCategory _$LitigationRequestCategoryFromJson(
@@ -220,6 +259,7 @@ Report _$ReportFromJson(Map<String, dynamic> json) => Report(
       judgmentDate: json['judgmentDate'] as String?,
       facts: json['facts'] as String?,
       reasons: json['reasons'] as String?,
+      arbitratorCitizenName: json['arbitratorCitizenName'] as String?,
       judgmentDecisionText: json['judgmentDecisionText'] as String?,
       modificationRequest: json['modificationRequest'] as String?,
       judgmentDecisionDate: json['judgmentDecisionDate'] as String?,
@@ -240,6 +280,7 @@ Map<String, dynamic> _$ReportToJson(Report instance) => <String, dynamic>{
       'explanationRequestDate': instance.explanationRequestDate,
       'explanationRequests': instance.explanationRequests,
       'response': instance.response,
+      'arbitratorCitizenName': instance.arbitratorCitizenName,
       'responseOn': instance.responseOn,
       'litigationRequestArbitrationReportExplanationRequestFiles':
           instance.litigationRequestArbitrationReportExplanationRequestFiles,

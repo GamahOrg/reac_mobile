@@ -21,6 +21,12 @@ class SuccessStateAgreementAction<T> extends ClaimStates {
   final T data;
   const SuccessStateAgreementAction(this.data, {super.message, super.retryActionFunction});
 }
+
+class SuccessStateSendLitigationFeesRequestPaid<T> extends ClaimStates {
+  final T data;
+  const SuccessStateSendLitigationFeesRequestPaid(this.data, {super.message, super.retryActionFunction});
+}
+
 class SuccessNumberArbitrationsRequestState<T> extends ClaimStates {
   final T data;
   const SuccessNumberArbitrationsRequestState(this.data, {super.message, super.retryActionFunction});

@@ -103,28 +103,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextInputAction.next),
                   identityTypeSelect == IdentityType.gulf
                       ? Column(
-                    children: [
-                      SizedBox(
-                        height: 4.h,
-                      ),
-                      loginTextEditing(
-                          MyApp.tr.password,
-                          MyApp.tr.writePassword,
-                          true,
-                          passwordController,
-                          myCubit.state is PasswordError,
-                          myCubit.state.message ?? "",
-                          TextInputAction.done),
-                    ],
-                  )
+                          children: [
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            loginTextEditing(
+                                MyApp.tr.password,
+                                MyApp.tr.writePassword,
+                                true,
+                                passwordController,
+                                myCubit.state is PasswordError,
+                                myCubit.state.message ?? "",
+                                TextInputAction.done),
+                          ],
+                        )
                       : const SizedBox(),
                   SizedBox(
                     height: 8.h,
                   ),
                   DefaultButton(
                     onTap: () {
-                      myCubit.login(identityNumberController.text, "123456",
-                      );
+                        myCubit.login(identityNumberController.text, "123456",
+                            );
                     },
                     firstGradientColor: AppColors.selectedTextTab,
                     secondGradientColor: AppColors.selectedTextTab,
@@ -134,26 +134,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     isCircular: true,
                     widget: myCubit.state is LoadingState
                         ? const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.white,
-                        ))
+                            child: CircularProgressIndicator(
+                            color: AppColors.white,
+                          ))
                         : identityTypeSelect == IdentityType.gulf
-                        ? Text(
-                      MyApp.tr.login,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    )
-                        : Text(
-                      MyApp.tr.verification,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    ),
+                            ? Text(
+                                MyApp.tr.login,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w700),
+                                textAlign: TextAlign.center,
+                              )
+                            : Text(
+                                MyApp.tr.verification,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w700),
+                                textAlign: TextAlign.center,
+                              ),
                     width: double.infinity,
                     height: 6.h,
                     radius: 50,
@@ -163,36 +163,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   identityTypeSelect == IdentityType.gulf
                       ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          MyApp.tr.forgetPassword,
-                          style: TextStyle(
-                              color: Color(0X660D1126),
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, ResetPassword.id);
-                            },
-                            child: Text(
-                              MyApp.tr.resetPassword,
-                              style: TextStyle(
-                                color: Color(0XFF002F56),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10.sp,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Color(0XFF002F56),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                MyApp.tr.forgetPassword,
+                                style: TextStyle(
+                                    color: Color(0X660D1126),
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w700),
                               ),
-                            ))
-                      ],
-                    ),
-                  )
+                              InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, ResetPassword.id);
+                                  },
+                                  child: Text(
+                                    MyApp.tr.resetPassword,
+                                    style: TextStyle(
+                                      color: Color(0XFF002F56),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10.sp,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Color(0XFF002F56),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        )
                       : const SizedBox(),
                 ],
               ),

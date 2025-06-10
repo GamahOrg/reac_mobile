@@ -31,6 +31,12 @@ class HomeCubit extends Cubit<ClaimStates> {
 
   Future<void> execute({String? searchKey}) async {
     emit(const LoadingState());
+
+    // Clear results if it's the first page
+    if (pageIndex == 1) {
+      claimResponse?.results?.clear();
+    }
+
     getClaimUseCase.pageSize = pageSize;
     getClaimUseCase.pageIndex = pageIndex;
     getClaimUseCase.searchKey = searchKey ?? "";
@@ -41,16 +47,13 @@ class HomeCubit extends Cubit<ClaimStates> {
     response.fold((error) {
       emit(ErrorState(error.toString(), message: error.message.toString()));
     }, (data) {
-      if (pageIndex ==1) {
-        claimResponse = data.data;
+      if (pageIndex == 1) {
+        claimResponse = data.data; // Replace with fresh data
       } else {
-        claimResponse?.results = [...claimResponse?.results ?? [], ...data.data?.results ?? []];
+        claimResponse?.results = [...?claimResponse?.results, ...?data.data?.results]; // Append
       }
-      if ((data.data?.results?.length ?? 0) < pageSize) {
-        hasNextPage = false;
-      } else {
-        hasNextPage = true;
-      }
+
+      hasNextPage = (data.data?.results?.length ?? 0) >= pageSize;
 
       emit(SuccessState(data, message: 'Data loaded successfully!'));
     });

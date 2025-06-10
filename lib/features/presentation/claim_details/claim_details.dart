@@ -17,6 +17,7 @@ import 'package:reac/features/presentation/claim_details/widgets/claim_tabs.dart
 import 'package:reac/features/presentation/claim_details/widgets/number_arbitration_bottom_sheet.dart';
 import 'package:reac/features/presentation/claim_details/widgets/resuable_cube.dart';
 import 'package:reac/features/presentation/claim_details/widgets/select_arbitration_bottom_sheet.dart';
+import 'package:reac/features/presentation/home/claims_screen.dart';
 import 'package:reac/features/presentation/widgets/rating/rating_bottom_sheet.dart';
 import '../../../app/app_assets.dart';
 import '../../../app/function.dart';
@@ -85,13 +86,22 @@ class _ClaimDetailsState extends State<ClaimDetails> {
             builder: (context, state) {
               final cubit = context.watch<ClaimDetailsCubit>();
               return BlocConsumer<NumberOfArbitrationPanelCubit, ClaimStates>(
-                  listener: (context, state) {},
+                  listener: (context, state) {
+                    if(state is SuccessStateSendLitigationFeesRequestPaid){
+                      SuccessDialog.show(context: context,firstText: state.message.toString());
+                      Future.delayed(Duration(seconds: 1));
+                      Navigator.pushNamed(context, ClaimsScreen.id, arguments: "login");
+
+                    }
+                  },
                   builder: (context, state) {
                     final numberOfArbitrationPanelCubit = context.watch<NumberOfArbitrationPanelCubit>();
                     return BlocConsumer<AppointmentMembersArbitrationPanelCubit, ClaimStates>(
                         listener: (context, state) {},
                         builder: (context, state) {
                           final appointmentMembersArbitrationPanelCubit = context.watch<AppointmentMembersArbitrationPanelCubit>();
+                          dPrint(widget.claimDetailsArgements!.typeStep.toString());
+                          dPrint("widget.claimDetailsArgements!.typeStep.toString()");
                         //   if(widget.claimDetailsArgements?.isDetailsFromHome==true){
                         // cubit.executeDataClaim(
                         //         litigationId: widget.claimDetailsArgements!.litigationId);
@@ -113,10 +123,56 @@ class _ClaimDetailsState extends State<ClaimDetails> {
                             model = numberOfArbitrationPanelCubit.numberOfArbitrationPanelModel;
                           }
                           return Scaffold(
-                            bottomNavigationBar:
-                            (widget.claimDetailsArgements?.isDetailsFromHome ==false&&numberOfArbitrationPanelCubit.numberOfArbitrationPanelModel?.allowAdd==false&&widget.claimDetailsArgements?.typeStep?.text==StepsClaims.determineTheNumberOfArbitrators.text)||
-                                (widget.claimDetailsArgements?.isDetailsFromHome ==false&&appointmentMembersArbitrationPanelCubit.arbitratorsModelGet?.allowAdd==false&&widget.claimDetailsArgements?.typeStep?.text==StepsClaims.appointmentOfMembersOfTheArbitrationPanel.text)
-                                ?const SizedBox():model!=null? _mainButton(model):null,
+                            bottomNavigationBar: () {
+                              final isFromHome = widget.claimDetailsArgements?.isDetailsFromHome;
+                              final typeStepText = widget.claimDetailsArgements?.typeStep?.text;
+                              final status = widget.claimDetailsArgements?.status;
+
+                              final isDetermineStep = typeStepText == StepsClaims.determineTheNumberOfArbitrators.text;
+                              final isAppointmentStep = typeStepText == StepsClaims.appointmentOfMembersOfTheArbitrationPanel.text;
+
+                              final allowAddNumber = numberOfArbitrationPanelCubit.numberOfArbitrationPanelModel?.allowAdd;
+                              final allowAddAppointment = appointmentMembersArbitrationPanelCubit.arbitratorsModelGet?.allowAdd;
+
+                              print('isDetailsFromHome: $isFromHome');
+                              print('typeStepText: $typeStepText');
+                              print('status: $status');
+                              print('allowAddNumber: $allowAddNumber');
+                              print('allowAddAppointment: $allowAddAppointment');
+                              print(LitigationStatus.CollectionOfLitigationFeesRequestIsBeingSent.value.toString());
+
+                              // First condition block
+                              if (isFromHome == false &&
+                                  allowAddNumber == false &&
+                                  isDetermineStep) {
+                                print('Condition 1 matched: isDetailsFromHome == false, allowAddNumber == false, isDetermineStep == true');
+                                return const SizedBox();
+                              }
+
+                              // Second condition block
+                              if (isFromHome == false &&
+                                  allowAddAppointment == false &&
+                                  isAppointmentStep) {
+                                print('Condition 2 matched: isDetailsFromHome == false, allowAddAppointment == false, isAppointmentStep == true');
+                                return const SizedBox();
+                              }
+
+                              // Third condition block
+                              if (isFromHome == true &&
+                                  status == LitigationStatus.CollectionOfLitigationFeesRequestIsBeingSent.value) {
+                                print('Condition 3 matched: isDetailsFromHome == true, status == CollectionOfArbitrationFeesRequestIsBeingSent');
+                                return _mainButton(model, numberOfArbitrationPanelCubit);
+                              }
+
+                              // Fourth condition block
+                              if (model != null) {
+                                print('Condition 4 matched: model != null');
+                                return _mainButton(model, null);
+                              }
+
+                              print('No conditions matched, returning null');
+                              return null;
+                            }(),
                             body: SingleChildScrollView(
                               child: Stack(
                                 alignment: Alignment.topCenter,
@@ -218,18 +274,27 @@ class _ClaimDetailsState extends State<ClaimDetails> {
             }));
   }
 
-  Widget _mainButton(DetailsResponseModel detailsResponseModel) {
-    return ClaimMainButton(
-      typeStep: widget.claimDetailsArgements?.typeStep,
-      cubit: detailsResponseModel,
-      status: widget.claimDetailsArgements?.status,
-      callBack: () {
-        if (widget.claimDetailsArgements?.typeStep?.text == StepsClaims.determineTheNumberOfArbitrators.text) {
-          NumberArbitrationBottomSheet.show(context, widget.claimDetailsArgements?.litigationId??"");
-        } else if (widget.claimDetailsArgements?.typeStep?.text == StepsClaims.appointmentOfMembersOfTheArbitrationPanel.text) {
-          appointmentOfMembersOfTheArbitrationBottomSheet.show(context, widget.claimDetailsArgements?.litigationId??"");
-        }
-      },
+  Widget _mainButton(DetailsResponseModel? detailsResponseModel, NumberOfArbitrationPanelCubit? cubit) {
+    return Builder(
+      builder: (context) {
+        return ClaimMainButton(
+          typeStep: widget.claimDetailsArgements?.typeStep,
+          cubit: detailsResponseModel,
+          status: widget.claimDetailsArgements?.status,
+          callBack: () async {
+            if (widget.claimDetailsArgements?.typeStep?.text == StepsClaims.determineTheNumberOfArbitrators.text) {
+              NumberArbitrationBottomSheet.show(context, widget.claimDetailsArgements?.litigationId??"");
+            } else if (widget.claimDetailsArgements?.typeStep?.text == StepsClaims.appointmentOfMembersOfTheArbitrationPanel.text) {
+              appointmentOfMembersOfTheArbitrationBottomSheet.show(context, widget.claimDetailsArgements?.litigationId??"");
+            }
+            else if (widget.claimDetailsArgements?.status == 26) {
+              await cubit!.sendLitigationFeesRequestPaid(id: widget.claimDetailsArgements?.litigationId??"");
+              ///ApiCall
+              //appointmentOfMembersOfTheArbitrationBottomSheet.show(context, widget.claimDetailsArgements?.litigationId??"");
+            }
+          },
+        );
+      }
     );
   }
 

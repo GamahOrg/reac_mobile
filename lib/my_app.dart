@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:reac/api_logger.dart';
 import 'package:reac/app/app_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:reac/app/app_router.dart';
@@ -10,14 +11,43 @@ import 'package:reac/app_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:reac/features/presentation/auth_screens/login/login_screen.dart';
 import 'package:reac/features/presentation/home/claims_screen.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'app/text_style.dart';
 
 
 
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+void _startShakeDetection() {
+  double lastX = 0.0, lastY = 0.0, lastZ = 0.0;
+  int shakeCount = 0;
+  const double shakeThreshold = 15.0;
 
-class MyApp extends StatelessWidget {
+  accelerometerEvents.listen((event) {
+    double deltaX = (lastX - event.x).abs();
+    double deltaY = (lastY - event.y).abs();
+    double deltaZ = (lastZ - event.z).abs();
+
+    if (deltaX > shakeThreshold || deltaY > shakeThreshold || deltaZ > shakeThreshold) {
+      shakeCount++;
+      if (shakeCount >= 2) {
+        shakeCount = 0;
+        _showApiLogs();
+      }
+    }
+
+    lastX = event.x;
+    lastY = event.y;
+    lastZ = event.z;
+  });
+}
+
+void _showApiLogs() {
+  navigatorKey.currentState?.push(
+    MaterialPageRoute(builder: (context) => ApiLoggerScreen()),
+  );
+}
+class MyApp extends StatefulWidget {
   static bool isAppTypeEngineer = getIt<BuildConfig>().env == CustomEnv.client;
   static late bool isDark;
   static late AppLocalizations tr;
@@ -25,6 +55,18 @@ class MyApp extends StatelessWidget {
 
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _startShakeDetection();
+  }
   @override
   Widget build(BuildContext context) {
     bool isLogged = getIt<AppPreferences>().userToken.isNotEmpty? true:false;
@@ -50,10 +92,10 @@ class MyApp extends StatelessWidget {
                   scaffoldBackgroundColor: const Color(0xffF4F5F9),
                 ),
                 onGenerateTitle: (context) {
-                  appContext = context;
-                  isDark = cubit.isDark;
-                  tr = AppLocalizations.of(context)!;
-                  return tr.appTitle;
+                  MyApp.appContext = context;
+                  MyApp.isDark = cubit.isDark;
+                  MyApp.tr = AppLocalizations.of(context)!;
+                  return MyApp.tr.appTitle;
                 },
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,

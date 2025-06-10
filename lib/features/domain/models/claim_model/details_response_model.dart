@@ -45,14 +45,17 @@ class LitigationRequestShortDto {
   bool? isExemptionReduction;
   Contract? contract;
   LitigationRequestCategory? litigationRequestCategory;
+  LitigationRequestAmount? litigationRequestAmount;
   ExternalStatus? externalStatus;
   ExternalStatus? internalStatus;
+  ArbitratorCitizen? arbitratorCitizen;
   String? id;
 
   LitigationRequestShortDto(
       {this.requestCode,
         this.cityName,
         this.areaName,
+        this.arbitratorCitizen,
         this.contractAddress,
         this.title,
         this.description,
@@ -66,6 +69,39 @@ class LitigationRequestShortDto {
       _$LitigationRequestShortDtoFromJson(json);
   Map<String, dynamic> toJson() => _$LitigationRequestShortDtoToJson(this);
 }
+
+@JsonSerializable()
+class LitigationRequestAmount {
+  int? fees;
+
+  LitigationRequestAmount(
+      {this.fees,
+        });
+  factory LitigationRequestAmount.fromJson(Map<String, dynamic> json) =>
+      _$LitigationRequestAmountFromJson(json);
+  Map<String, dynamic> toJson() => _$LitigationRequestAmountToJson(this);
+}
+
+@JsonSerializable()
+class ArbitratorCitizen {
+  String? mobile;
+  String? email;
+  String? identityNumber;
+  String? fullName;
+
+
+  ArbitratorCitizen(
+      {
+        this.mobile,
+        this.identityNumber,
+        this.fullName,
+        this.email
+        });
+  factory ArbitratorCitizen.fromJson(Map<String, dynamic> json) =>
+      _$ArbitratorCitizenFromJson(json);
+  Map<String, dynamic> toJson() => _$ArbitratorCitizenToJson(this);
+}
+
 @JsonSerializable()
 class LitigationRequestCategory {
   LitigationRequestCategory({
@@ -159,6 +195,7 @@ class Report {
   String? explanationRequestDate;
   String? explanationRequests;
   String? response;
+  String? arbitratorCitizenName;
   String? responseOn;
   List<LitigationRequestArbitrationReportExplanationRequestFiles>?
   litigationRequestArbitrationReportExplanationRequestFiles;
@@ -182,6 +219,7 @@ class Report {
         this.judgmentDate,
         this.facts,
         this.reasons,
+        this.arbitratorCitizenName,
         this.judgmentDecisionText,
         this.modificationRequest,
         this.judgmentDecisionDate,

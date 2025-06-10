@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:reac/features/domain/models/claim_model/details_response_model.dart';
 import 'package:reac/features/domain/models/claim_model/reconciliation.dart';
-import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import '../../../app/api_urls.dart';
 import '../../../app/core/data/response/base_response.dart';
@@ -12,6 +11,7 @@ import '../../domain/models/claim_model/arbitration_request_model.dart';
 import '../../domain/models/claim_model/claim_details_model.dart';
 import '../../domain/models/claim_model/claim_event_model.dart';
 import '../../domain/models/claim_model/cliam_model.dart';
+import '../../domain/models/claim_model/list _of_ reconciliation _sessions_model.dart';
 import '../../domain/models/claim_model/notification_model.dart';
 import '../../domain/models/claim_model/number_of_arbitrations.dart';
 import '../../domain/models/claim_model/number_of_arbitrations_request_model.dart';
@@ -63,6 +63,22 @@ abstract class ClaimServiceClient {
     @Query("minutesOfMeetingApprovalStatus")
     int? minutesOfMeetingApprovalStatus,
   );
+  @GET(ApiUrls.getLitigationRequestForAllSession)
+  Future<BaseResponse<ReconciliationSessionsModel>> getLitigationRequestForAllSessionApi(
+      @Query("pageSize") int? pageSize,
+      @Query("pageIndex") int? PageIndex,
+      );
+
+  @GET(ApiUrls.getArbitrationSessionLitigationRequestForAllSession)
+  Future<BaseResponse<ReconciliationSessionsModel>> getArbitrationSessionLitigationRequestForAllSession(
+      @Query("pageSize") int? pageSize,
+      @Query("pageIndex") int? PageIndex,
+      );
+
+  @POST(ApiUrls.sendLitigationFeesRequestPaid)
+  Future<BaseResponse> sendLitigationFeesRequestPaid(
+      @Query("litigationId") String? litigationId,
+      );
 
   @GET(ApiUrls.getLitigationRequestForReportByRequestId)
   Future<BaseResponse<DetailsResponseModel>> interpretationOfTheRulingApi(
@@ -144,6 +160,7 @@ abstract class ClaimServiceClient {
     @Query("pageSize") int? pageSize,
     @Query("pageIndex") int? PageIndex,
   );
+
 
   @GET(ApiUrls.getNotification)
   Future<BaseResponse<NotificationModel>> getNotificationListApi();

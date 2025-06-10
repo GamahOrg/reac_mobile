@@ -32,7 +32,16 @@ class ClaimStatusWidget extends StatelessWidget {
         status.value == LitigationStatus.Rejected.value ||
         status.value == LitigationStatus.New.value ||
         status.value == LitigationStatus.ReconciliationWasMade.value ||
-        status.value == LitigationStatus.WaiverOfTheLitigation.value ||
+        status.value == LitigationStatus.WaiverOfTheLitigation.value||
+        status.value == LitigationStatus.CollectionOfArbitrationFeesRequestIsBeingSent.value||
+        status.value == LitigationStatus.ArbitrationFeesHaveBeenCollected.value||
+        status.value == LitigationStatus.CollectionOfLitigationFeesRequestIsBeingSent.value||
+        status.value == LitigationStatus.PendingPayment.value||
+        status.value == LitigationStatus.LitigationApprovedCollectionOfReconciliationFeesRequestIsBeingSend.value||
+        status.value == LitigationStatus.ReconciliationFeesHaveBeenCollected.value||
+        status.value == LitigationStatus.CollectionOfReconciliationFeesRequestIsBeingSent.value||
+        status.value == LitigationStatus.LitigationFeesHaveBeenCollected.value||
+        status.value == LitigationStatus.ReconciliationOnTradyPlatform.value||
         status.value == LitigationStatus.WaiverOfRight.value) {
       return Container(
         margin: EdgeInsets.only(top: isDetailsFromHome == true ? 5.h : 1.h),

@@ -265,6 +265,15 @@
   "files":"Files",
   "response":"Response",
   "replyDate":"Reply date",
-  "noNotifications":"No notifications"
+  "noNotifications":"No notifications",
+  "reconciliationThroughTheTaradhaPlatform":"Reconciliation through the Taradha platform",
+  "collectionOfLitigationFeesRequestIsBeingSent":"CollectionOfLitigationFeesRequestIsBeingSent",
+  "litigationFeesHaveBeenCollected":"LitigationFeesHaveBeenCollected",
+  "collectionOfReconciliationFeesRequestIsBeingSent":"CollectionOfReconciliationFeesRequestIsBeingSent",
+  "reconciliationFeesHaveBeenCollected":"ReconciliationFeesHaveBeenCollected",
+  "collectionOfArbitrationFeesRequestIsBeingSent":"CollectionOfArbitrationFeesRequestIsBeingSent",
+  "arbitrationFeesHaveBeenCollected":"ArbitrationFeesHaveBeenCollected",
+  "litigationApprovedCollectionOfReconciliationFeesRequestIsBeingSend":"LitigationApprovedCollectionOfReconciliationFeesRequestIsBeingSend",
+  "pendingPayment":"PendingPayment"
 
 }

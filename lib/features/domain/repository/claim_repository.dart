@@ -3,6 +3,7 @@ import 'package:reac/app/core/data/response/base_response.dart';
 import 'package:reac/features/domain/models/claim_model/agreement_action.dart';
 import 'package:reac/features/domain/models/claim_model/claim_details_model.dart';
 import 'package:reac/features/domain/models/claim_model/details_response_model.dart';
+import 'package:reac/features/domain/models/claim_model/list%20_of_%20reconciliation%20_sessions_model.dart';
 import 'package:reac/features/domain/models/claim_model/notification_model.dart';
 import 'package:reac/features/domain/models/claim_model/number_of_arbitrations.dart';
 import 'package:reac/features/domain/models/claim_model/reconciliation.dart';
@@ -44,6 +45,9 @@ abstract class ClaimRepository{
   Future<Either<Failure, BaseResponse<ClaimResponse>>> getInterpretationListApi( int pageSize, int pageIndex,);
   Future<Either<Failure, BaseResponse<ClaimResponse>>> getAgreementListApi( int pageSize, int pageIndex,);
   Future<Either<Failure, BaseResponse<NotificationModel>>> getNotificationApi();
+  Future<Either<Failure, BaseResponse<ReconciliationSessionsModel>>> getLitigationRequestForAllSessionApi(int pageSize, int pageIndex);
+  Future<Either<Failure, BaseResponse<ReconciliationSessionsModel>>> getArbitrationSessionLitigationRequestForAllSession(int pageSize, int pageIndex);
+  Future<Either<Failure, BaseResponse>> sendLitigationFeesRequestPaid(String litigationId);
 
 }
 

@@ -28,10 +28,15 @@ class _NumberArbitratorsListState extends State<NumberArbitratorsList> {
   void loadMore() async {
     if (cubit.hasNextPage) {
       cubit.pageIndex++;
-      await cubit.execute(
-      );
-    } else {
-      dPrint("Conditions not met for loading more data");
+      final currentPosition = _scrollController.position.pixels;
+
+      await cubit.execute();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(currentPosition);
+        }
+      });
     }
   }
 

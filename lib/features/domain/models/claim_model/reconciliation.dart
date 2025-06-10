@@ -26,10 +26,13 @@ class LitigationRequestShortDto {
   String? contractAddress;
   String? title;
   String? description;
+  int? mintuesOfMeetingApprovalPlaintiffStatus;
+  int? mintuesOfMeetingApprovalDefendantStatus;
   bool? isFinancialLitigation;
   bool? isExemptionReduction;
   ApplicantCitizen? applicantCitizen;
   Contract? contract;
+  ReformerCitizen? reformerCitizen;
   ExternalStatus? externalStatus;
   ExternalStatus? internalStatus;
   LitigationRequestAmount? litigationRequestAmount;
@@ -41,7 +44,10 @@ class LitigationRequestShortDto {
       {this.requestCode,
         this.cityName,
         this.areaName,
+        this.reformerCitizen,
         this.contractAddress,
+        this.mintuesOfMeetingApprovalPlaintiffStatus,
+        this.mintuesOfMeetingApprovalDefendantStatus,
         this.title,
         this.description,
         this.isFinancialLitigation,
@@ -58,6 +64,18 @@ class LitigationRequestShortDto {
       _$LitigationRequestShortDtoFromJson(json);
   Map<String, dynamic> toJson() => _$LitigationRequestShortDtoToJson(this);
 
+}
+
+@JsonSerializable()
+class ReformerCitizen {
+  String? fullName;
+
+  ReformerCitizen(
+      {this.fullName,
+        });
+  factory ReformerCitizen.fromJson(Map<String, dynamic> json) =>
+      _$ReformerCitizenFromJson(json);
+  Map<String, dynamic> toJson() => _$ReformerCitizenToJson(this);
 }
 @JsonSerializable()
 class ApplicantCitizen {

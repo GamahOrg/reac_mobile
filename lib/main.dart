@@ -5,8 +5,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:reac/app/bloc_observer.dart';
 import 'package:reac/app/di/di.dart';
 import 'package:reac/my_app.dart';
+import 'dart:io';
+
 
 void main() async {
+  HttpOverrides.global = MyHttpOverrides();
+
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await configureDependencies();
@@ -18,4 +22,12 @@ void main() async {
   ]);
 
   runApp(const MyApp());
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+  }
 }

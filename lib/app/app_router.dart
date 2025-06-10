@@ -3,7 +3,9 @@ import 'package:reac/features/presentation/auth_screens/reset_password/reset_pas
 import 'package:reac/features/presentation/auth_screens/reset_password/reset_password_final.dart';
 import 'package:reac/features/presentation/auth_screens/verify_login_gulf.dart';
 import 'package:reac/features/presentation/home/claims_screen.dart';
+import 'package:reac/features/presentation/widgets/GetLitigationRequestForAllSessionScreen.dart';
 import 'package:reac/features/presentation/widgets/claim_details_screen.dart';
+import 'package:reac/features/presentation/widgets/getArbitrationSessionLitigationRequestForAllSessionScreen.dart';
 
 import '../features/presentation/agreement_list_screen.dart';
 import '../features/presentation/appointment_members_arbitration_panel_list.dart';
@@ -44,6 +46,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ReplyReporterScreen());
       case NumberArbitratorsList.id:
         return MaterialPageRoute(builder: (_) => const NumberArbitratorsList());
+
+      case GetLitigationRequestForAllSessionScreen.id:
+        return MaterialPageRoute(builder: (_) => const GetLitigationRequestForAllSessionScreen());
+      case GetArbitrationSessionLitigationRequestForAllSessionScreen.id:
+        return MaterialPageRoute(builder: (_) => const GetArbitrationSessionLitigationRequestForAllSessionScreen());
 
       case SettingScreen.id:
         return MaterialPageRoute(builder: (_) => const SettingScreen());

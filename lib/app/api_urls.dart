@@ -1,67 +1,51 @@
+
 class ApiUrls {
-  static const baseURL = "https://staging-reac-api.rega.gov.sa";
-  static const baseAuthURLWithPort = "$baseURL";
-  static const baseURLWithMainPortal = "$baseURL";
+  static const baseURL = "https://dev-reac-api.rega.gov.sa";
+  //static const baseURL = "https://staging-reac-api.rega.gov.sa";
+  //static const baseURLAsgaTech = "http://192.168.194.183";
+  //static const baseAuthURLWithPort = "$baseURLAsgaTech:222";
+  //static const baseURLWithMainPortal = "$baseURLAsgaTech:3333";
   //********************auth****************************
-  static const login = "$baseAuthURLWithPort/api/Account/Login";
-  static const verifyUser = "$baseAuthURLWithPort/api/Account/VerifyUser";
-  static const checkStatus = "$baseURLWithMainPortal/api/mobile/Account/CheckStatus";
-  static const identityHub = "$baseAuthURLWithPort/identity-hub";
+  static const login = "$baseURL/api/Account/Login";
+  static const verifyUser = "$baseURL/api/Account/VerifyUser";
+  static const checkStatus = "$baseURL/api/Account/CheckStatus";
   static const resetPassword = "";
   static const verifyOtp = "";
-  // ********ClaimsList***********//
-  static const claims =
-      "$baseURLWithMainPortal/api/mobile/LitigationRequest/List";
+ // ********ClaimsList***********//
+  static const claims = "$baseURL/api/LitigationRequest/Mobile/List";
   // ********ClaimDataDetails***********//
-  static const claimDetails =
-      "$baseURLWithMainPortal/api/mobile/LitigationRequest/GetLitigationById";
+  static const claimDetails = "$baseURL/api/LitigationRequest/Mobile/GetLitigationById";
   // ********ClaimDetailsEvents***********//
-  static const claimEvents =
-      "$baseURLWithMainPortal/api/mobile/LitigationRequest/GetLitigationRequestEvents";
+  static const claimEvents = "$baseURL/api/LitigationRequest/Mobile/GetLitigationRequestEvents";
   // ********ClaimAgreement***********//
-  static const getCitizenLitigationRequestForAgreementRequestReply =
-      "$baseURLWithMainPortal/api/mobile/LitigationRequest/GetCitizenLitigationRequestForAgreementRequestReply";
-  static const getCitizenLitigationRequestForAgreementRequestReplyByRequestId =
-      "$baseURLWithMainPortal/api/mobile/LitigationRequest/GetCitizenLitigationRequestForAgreementRequestReplyByRequestId";
-  static const addCitizenLitigationRequestForAgreementRequestReply =
-      "$baseURLWithMainPortal/api/mobile/LitigationRequest/AddCitizenLitigationRequestForAgreementRequestReply";
+  static const getCitizenLitigationRequestForAgreementRequestReply="$baseURL/api/LitigationRequest/Mobile/GetCitizenLitigationRequestForAgreementRequestReply";
+  static const getCitizenLitigationRequestForAgreementRequestReplyByRequestId = "$baseURL/api/LitigationRequest/Mobile/GetCitizenLitigationRequestForAgreementRequestReplyByRequestId";
+  static const addCitizenLitigationRequestForAgreementRequestReply = "$baseURL/api/LitigationRequest/Mobile/AddCitizenLitigationRequestForAgreementRequestReply";
   //***** Appointment of members of the arbitration panel******
-  static const getCitizenLitigationRequestForArbitratorsNominationListReply =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsNominationListReply";
-  static const getCitizenLitigationRequestForArbitratorsNominationListReplyByRequestId =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsNominationListReplyByRequestId";
-  static const addCitizenLitigationRequestForReportArbitratorsNominationListReply =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/AddCitizenLitigationRequestForReportArbitratorsNominationListReply";
-
-  //************ArbitratorsCount************
-  static const getCitizenLitigationRequestForArbitratorsCountReply =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/GetCitizenLitigationRequestForArbitratorsCountReply";
-  static const getLitigationRequestForAddArbitratorsCountByRequestId =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/GetLitigationRequestForAddArbitratorsCountByRequestId";
-  static const getNumberOfArbitrationPanel =
-      "$baseURLWithMainPortal/api/mobile/SysArbitratorCount/Get";
-  static const addArbitratorsCount =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/AddArbitratorsCount";
+  static const getCitizenLitigationRequestForArbitratorsNominationListReply = "$baseURL/api/Arbitration/Mobile/GetCitizenLitigationRequestForArbitratorsNominationListReply";
+  static const getCitizenLitigationRequestForArbitratorsNominationListReplyByRequestId = "$baseURL/api/Arbitration/Mobile/GetCitizenLitigationRequestForArbitratorsNominationListReplyByRequestId";
+  static const addCitizenLitigationRequestForReportArbitratorsNominationListReply = "$baseURL/api/Arbitration/Mobile/AddCitizenLitigationRequestForReportArbitratorsNominationListReply";
+ //************ArbitratorsCount************
+  static const getCitizenLitigationRequestForArbitratorsCountReply = "$baseURL/api/Arbitration/Mobile/GetCitizenLitigationRequestForArbitratorsCountReply";
+  static const getLitigationRequestForAddArbitratorsCountByRequestId = "$baseURL/api/Arbitration/Mobile/GetLitigationRequestForAddArbitratorsCountByRequestId";
+  static const getNumberOfArbitrationPanel = "$baseURL/api/SysArbitratorCount/Get";
+  static const addArbitratorsCount = "$baseURL/api/Arbitration/Mobile/AddArbitratorsCount";
+  static const getArbitrationSessionLitigationRequestForAllSession = "$baseURL/api/ArbitrationSession/GetLitigationRequestForAllSession";
 
   // ********Reconciliation api***********//
-  static const getCitizenLitigationRequestForReportReply =
-      "$baseURLWithMainPortal/api/Reconciliation/GetCitizenLitigationRequestForReportReply";
-  static const getCitizenLitigationRequestForReportReplyByRequestId =
-      "$baseURLWithMainPortal/api/Reconciliation/GetCitizenLitigationRequestForReportReplyByRequestId";
-  static const addCitizenLitigationRequestForReportReply =
-      "$baseURLWithMainPortal/api/Reconciliation/AddCitizenLitigationRequestForReportReply";
+  static const getCitizenLitigationRequestForReportReply = "$baseURL/api/Reconciliation/Mobile/GetCitizenLitigationRequestForReportReply";
+  static const getCitizenLitigationRequestForReportReplyByRequestId = "$baseURL/api/Reconciliation/Mobile/GetCitizenLitigationRequestForReportReplyByRequestId";
+  static const addCitizenLitigationRequestForReportReply = "$baseURL/api/Reconciliation/Mobile/AddCitizenLitigationRequestForReportReply";
+  static const getLitigationRequestForAllSession = "$baseURL/api/Reconciliation/GetLitigationRequestForAllSession";
   // ********interpretation api***********//
-  static const getLitigationRequestForReportByRequestId =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/GetLitigationRequestForReportByRequestId";
-  static const getLitigationRequestForReportExplanationRequest =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/GetLitigationRequestForReportExplanationRequest";
-  static const uploadFile =
-      "$baseURLWithMainPortal/api/mobile/SysFileManager/Upload";
-  static const addArbitrationReportExplanationRequest =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/AddArbitrationReportExplanationRequest";
-  static const getLitigationRequestForReportExplanationRequestByRequestId =
-      "$baseURLWithMainPortal/api/mobile/Arbitration/GetLitigationRequestForReportExplanationRequestByRequestId";
+  static const getLitigationRequestForReportByRequestId = "$baseURL/api/Arbitration/Mobile/GetLitigationRequestForReportByRequestId";
+  static const getLitigationRequestForReportExplanationRequest = "$baseURL/api/Arbitration/Mobile/GetLitigationRequestForReportExplanationRequest";
+  static const uploadFile = "$baseURL/api/SysFileManager/Upload";
+  static const addArbitrationReportExplanationRequest = "$baseURL/api/Arbitration/Mobile/AddArbitrationReportExplanationRequest";
+  static const getLitigationRequestForReportExplanationRequestByRequestId = "$baseURL/api/Arbitration/Mobile/GetLitigationRequestForReportExplanationRequestByRequestId";
+  static const sendLitigationFeesRequestPaid = "$baseURL/api/LitigationRequest/SendLitigationFeesRequestPaid";
 // ********Notification api***********//
-  static const getNotification =
-      "$baseURL:3333/api/Notification/GetNotificationListForPortal";
+  static const getNotification = "$baseURL/api/Notification/GetNotificationListForPortal";
 }
+//http://192.168.194.171
+//https://staging-reac-api.rega.gov.sa

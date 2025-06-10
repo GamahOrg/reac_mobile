@@ -284,6 +284,24 @@
  "files":"الملفات",
  "response":"الرد",
  "replyDate":"تاريخ الرد",
- "noNotifications":"لا يوجد إشعارات"
+ "noNotifications":"لا يوجد إشعارات",
+ "reconciliationThroughTheTaradhaPlatform":"الصلح بواسطة منصة تراضى",
+ "collectionOfLitigationFeesRequestIsBeingSent":"تم إرسال طلب تحصيل رسوم الدعوة",
+ "litigationFeesHaveBeenCollected":"تم تحصيل رسوم الدعوة",
+ "collectionOfReconciliationFeesRequestIsBeingSent":"تم إرسال طلب تحصيل رسوم الصلح",
+ "reconciliationFeesHaveBeenCollected":"تم تحصيل رسوم الصلح",
+ "collectionOfArbitrationFeesRequestIsBeingSent":"تم إرسال طلب تحصيل رسوم التحكيم",
+ "arbitrationFeesHaveBeenCollected":"تم تحصيل رسوم التحكيم",
+ "litigationApprovedCollectionOfReconciliationFeesRequestIsBeingSend":"تم قبول الدعوى وجارى إرسال طلب تحصيل رسوم الصلح",
+ "pendingPayment":"قيد دفع رسوم التحكيم"
+
+
+
+
+
+
+
+
+
 
 }

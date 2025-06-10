@@ -8,6 +8,7 @@ import 'package:reac/features/domain/models/claim_model/arbitration_request_mode
 import 'package:reac/features/domain/models/claim_model/claim_details_model.dart';
 import 'package:reac/features/domain/models/claim_model/claim_event_model.dart';
 import 'package:reac/features/domain/models/claim_model/details_response_model.dart';
+import 'package:reac/features/domain/models/claim_model/list%20_of_%20reconciliation%20_sessions_model.dart';
 import 'package:reac/features/domain/models/claim_model/notification_model.dart';
 import 'package:reac/features/domain/models/claim_model/number_of_arbitrations.dart';
 import 'package:reac/features/domain/models/claim_model/number_of_arbitrations_request_model.dart';
@@ -209,5 +210,23 @@ class ClaimRepositoryImpl implements ClaimRepository {
   Future<Either<Failure, BaseResponse<NotificationModel>>> getNotificationApi()async {
     return await safeApi.call(
         apiCall: _remoteDataSource.getNotificationListApi());
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse<ReconciliationSessionsModel>>> getLitigationRequestForAllSessionApi(int pageSize, int pageIndex)async {
+    return await safeApi.call(
+        apiCall: _remoteDataSource.getLitigationRequestForAllSessionApi(pageSize, pageIndex));
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse<ReconciliationSessionsModel>>> getArbitrationSessionLitigationRequestForAllSession(int pageSize, int pageIndex)async {
+    return await safeApi.call(
+        apiCall: _remoteDataSource.getArbitrationSessionLitigationRequestForAllSession(pageSize, pageIndex));
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> sendLitigationFeesRequestPaid(String litigationId)async {
+    return await safeApi.call(
+        apiCall: _remoteDataSource.sendLitigationFeesRequestPaid(litigationId));
   }
 }

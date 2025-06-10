@@ -15,7 +15,7 @@ class SafeApi {
 
   Future<Either<Failure, T>> call<T, M>(
       {required Future<T> apiCall}) async {
-    if (await _networkInfo.isConnected) {
+    // if (await _networkInfo.isConnected) {
       try {
         final response = await apiCall;
           return Right(response);
@@ -24,8 +24,8 @@ class SafeApi {
         dPrint("$stacktrace");
         return Left(ErrorHandler.handle(error).failure);
       }
-    } else {
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
-    }
+    // } else {
+    //   return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    // }
   }
 }

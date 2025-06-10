@@ -111,7 +111,7 @@ class _ScalpelModelScreenState extends State<ScalpelModelScreen> {
                       ),
                     )
                   : const SizedBox(),
-              appBar: buildAppBar(context, MyApp.tr.requestsForAContract),
+              appBar: buildAppBar(context, MyApp.tr.participationForm),
               body: state is LoadingState
                   ? const Center(child: RotatingLoader())
                   : SingleChildScrollView(

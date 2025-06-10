@@ -19,7 +19,9 @@ enum StepsClaims {
   appointmentOfMembersOfTheArbitrationPanel('appointmentOfMembersOfTheArbitrationPanel'),
   determineTheNumberOfArbitrators('determineTheNumberOfArbitrators'),
   requestsForInterpretationOfRulings('requestsForInterpretationOfRulings'),
-  arbitrationAwards("arbitrationAwards");
+  arbitrationAwards("arbitrationAwards"),
+  collectionOfLitigationFeesRequestIsBeingSent("CollectionOfLitigationFeesRequestIsBeingSent");
+
   final String text;
 
   const StepsClaims(this.text);
@@ -36,6 +38,8 @@ String getStepsClaimsText(StepsClaims step) {
       return MyApp.tr.requestsForInterpretationOfRulings;
     case StepsClaims.arbitrationAwards:
       return MyApp.tr.arbitrationAwards;
+    case StepsClaims.collectionOfLitigationFeesRequestIsBeingSent:
+      return "تم ارسال طلب تحصيل رسوم الدعوة";
     default:
       return 'Unknown';
   }
@@ -169,7 +173,26 @@ enum LitigationStatus {
   AgreementRequestHasBeenRejected(23),
 
   ///<summary>ملغاة</summary>
-  Cancelled(24);
+  Cancelled(24),
+  ///<summary>الصلح بواسطة منصة تراضى </summary>
+  ReconciliationOnTradyPlatform(25),
+
+  ///<summary>تم إرسال طلب تحصيل رسوم الدعوة</summary>
+  CollectionOfLitigationFeesRequestIsBeingSent(26),
+  ///<summary>تم تحصيل رسوم الدعوة</summary>
+  LitigationFeesHaveBeenCollected (27),
+  ///<summary>تم إرسال طلب تحصيل رسوم الصلح</summary>
+  CollectionOfReconciliationFeesRequestIsBeingSent(28),
+  ///<summary>تم تحصيل رسوم الصلح</summary>
+  ReconciliationFeesHaveBeenCollected( 29),
+  ///<summary>تم إرسال طلب تحصيل رسوم التحكيم</summary>
+  CollectionOfArbitrationFeesRequestIsBeingSent(30),
+  ///<summary>تم تحصيل رسوم التحكيم</summary>
+  ArbitrationFeesHaveBeenCollected(31),
+  ///<summary>تم قبول الدعوى وجارى إرسال طلب تحصيل رسوم الصلح</summary>
+  LitigationApprovedCollectionOfReconciliationFeesRequestIsBeingSend (32),
+  ///<summary>قيد دفع رسوم التحكيم</summary>
+  PendingPayment(33);
   final int value;
   const LitigationStatus(this.value);
   factory LitigationStatus.fromValue(int value) {
@@ -223,6 +246,24 @@ extension LitigationStatusNameExtension on LitigationStatus {
         return MyApp.tr.agreementRequestHasBeenRejected;
       case LitigationStatus.Cancelled:
         return MyApp.tr.cancelled;
+      case LitigationStatus.ReconciliationOnTradyPlatform:
+        return MyApp.tr.reconciliationThroughTheTaradhaPlatform;
+      case LitigationStatus.CollectionOfLitigationFeesRequestIsBeingSent:
+        return MyApp.tr.collectionOfLitigationFeesRequestIsBeingSent;
+      case LitigationStatus.LitigationFeesHaveBeenCollected:
+        return MyApp.tr.litigationFeesHaveBeenCollected;
+      case LitigationStatus.CollectionOfReconciliationFeesRequestIsBeingSent:
+        return MyApp.tr.collectionOfReconciliationFeesRequestIsBeingSent;
+      case LitigationStatus.ReconciliationFeesHaveBeenCollected:
+        return MyApp.tr.reconciliationFeesHaveBeenCollected;
+      case LitigationStatus.CollectionOfArbitrationFeesRequestIsBeingSent:
+        return MyApp.tr.collectionOfArbitrationFeesRequestIsBeingSent;
+      case LitigationStatus.ArbitrationFeesHaveBeenCollected:
+        return MyApp.tr.arbitrationFeesHaveBeenCollected;
+      case LitigationStatus.LitigationApprovedCollectionOfReconciliationFeesRequestIsBeingSend:
+        return MyApp.tr.litigationApprovedCollectionOfReconciliationFeesRequestIsBeingSend;
+      case LitigationStatus.PendingPayment:
+        return MyApp.tr.pendingPayment;
     }
   }
 }

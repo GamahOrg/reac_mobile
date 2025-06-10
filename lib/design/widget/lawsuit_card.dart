@@ -44,7 +44,7 @@ class LawsuitCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
@@ -68,36 +68,41 @@ class LawsuitCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Container(
-                    margin: const EdgeInsets.only(bottom: 15, top: 10),
-                    padding: const EdgeInsets.only(
-                        top: 4, bottom: 4, left: 8, right: 8),
-                    decoration: BoxDecoration(
-                      color: statusColorById,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(
-                          AppAssets.icClock,
-                          color: textColorById,
-                        ),
-                        SizedBox(width: 1.w),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 3.0),
-                          child: Text(
-                            statusTitle,
-                            style: TextStyle(
+                  margin: const EdgeInsets.only(bottom: 15, top: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: statusColorById,
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        AppAssets.icClock,
+                        color: textColorById,
+                      ),
+                      SizedBox(width: 1.w),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 3.0),
+                        child: Center(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.height*0.2,
+                            child: Text(
+                              statusTitle,
+                              softWrap: true,
+                              style: TextStyle(
                                 color: textColorById,
-                                fontSize: AppCubit.get(context).isArSelected
-                                    ? 11.sp
-                                    : 9.sp,
-                                fontWeight: FontWeight.w400),
+                                fontSize: AppCubit.get(context).isArSelected ? 11.sp : 9.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                           ),
-                        )
-                      ],
-                    )),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
             Divider(

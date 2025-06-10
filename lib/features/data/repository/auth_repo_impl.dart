@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:reac/api_logger.dart';
 import 'package:reac/app/constants.dart';
 import 'package:reac/app/core/data/response/base_response.dart';
 import 'package:reac/app/di/module/dio_module.dart';
@@ -37,7 +38,16 @@ class AuthRepositoryImpl implements AuthRepository {
     return safeApi
         .call(apiCall: _remoteDataSource.login(loginRequest))
         .then((value) {
-      value.fold((l) {}, (r) {
+      value.fold((l) {
+
+        ApiLogger.logApiCall("login", loginRequest.toJson(), null, l);
+
+      }, (r) {
+        ApiLogger.logApiCall(
+          "login",
+          loginRequest.toJson(),
+          r, // RAW RESPONSE
+        );
         dPrint("Token${r.data?.accessToken}");
         appPreferences.putData(
             Constants.appPreferencesToken, r.data?.accessToken);
@@ -66,7 +76,19 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, BaseResponse<TransactionResponse>>> verifyUser(
       VerifyRequest request) {
-    return safeApi.call(apiCall: _remoteDataSource.verifyUser(request));
+    return safeApi.call(apiCall: _remoteDataSource.verifyUser(request)).then((value) {
+      value.fold((l) {
+        ApiLogger.logApiCall("login", request.toJson(), null, l);
+
+      }, (r) {
+        ApiLogger.logApiCall(
+          "login",
+          request.toJson(),
+          r, // RAW RESPONSE
+        );
+      });
+      return value;
+    });
   }
 
   @override
