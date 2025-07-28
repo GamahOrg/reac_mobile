@@ -14,9 +14,6 @@ import 'package:reac/features/presentation/home/claims_screen.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'app/text_style.dart';
 
-
-
-
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void _startShakeDetection() {
   double lastX = 0.0, lastY = 0.0, lastZ = 0.0;
@@ -28,7 +25,9 @@ void _startShakeDetection() {
     double deltaY = (lastY - event.y).abs();
     double deltaZ = (lastZ - event.z).abs();
 
-    if (deltaX > shakeThreshold || deltaY > shakeThreshold || deltaZ > shakeThreshold) {
+    if (deltaX > shakeThreshold ||
+        deltaY > shakeThreshold ||
+        deltaZ > shakeThreshold) {
       shakeCount++;
       if (shakeCount >= 2) {
         shakeCount = 0;
@@ -47,6 +46,7 @@ void _showApiLogs() {
     MaterialPageRoute(builder: (context) => ApiLoggerScreen()),
   );
 }
+
 class MyApp extends StatefulWidget {
   static bool isAppTypeEngineer = getIt<BuildConfig>().env == CustomEnv.client;
   static late bool isDark;
@@ -60,16 +60,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _startShakeDetection();
   }
+
   @override
   Widget build(BuildContext context) {
-    bool isLogged = getIt<AppPreferences>().userToken.isNotEmpty? true:false;
+    bool isLogged = getIt<AppPreferences>().userToken.isNotEmpty ? true : false;
     return BannerWidget(
       child: MultiBlocProvider(
         providers: [
@@ -81,13 +81,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             return MaterialApp(
                 navigatorKey: navigatorKey,
                 debugShowCheckedModeBanner: false,
-                theme:ThemeData(
+                theme: ThemeData(
                   appBarTheme: const AppBarTheme(
-                   systemOverlayStyle: SystemUiOverlayStyle(
-                     statusBarColor: Colors.transparent,
-                     statusBarIconBrightness: Brightness.light,
-                   )
-                  ),
+                      systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarColor: Colors.transparent,
+                    statusBarIconBrightness: Brightness.light,
+                  )),
                   fontFamily: AppTextStyle.mainArFont,
                   scaffoldBackgroundColor: const Color(0xffF4F5F9),
                 ),
@@ -102,7 +101,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 locale: cubit.locale,
                 onGenerateRoute: AppRouter.generatedRoute,
                 //initialRoute: getInitialRoute());
-                home: isLogged?  const ClaimsScreen():const LoginScreen());
+                home: isLogged ? const ClaimsScreen() : const LoginScreen());
           },
         ),
       ),
