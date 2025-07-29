@@ -249,7 +249,6 @@ class _ReplyReporterScreenState extends State<ReplyReporterScreen> {
           recentsLimit: 28,
           backgroundColor: Colors.white,
         ),
-        swapCategoryAndBottomBar: false,
         skinToneConfig: SkinToneConfig(enabled: true),
         categoryViewConfig: CategoryViewConfig(
           tabBarHeight: 40,
